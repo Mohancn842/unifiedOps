@@ -1,0 +1,462 @@
+/* Layout */
+.manager-container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+}
+
+.sidebar .logo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px 0;
+  font-size: 15px;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar li:hover,
+.sidebar li.active {
+  font-weight: bold;
+  color: #111827;
+}
+
+/* Main content */
+.dashboard-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+header h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.quick-actions {
+  margin: 10px 0 30px;
+}
+
+.quick-actions button {
+  margin-right: 10px;
+  padding: 8px 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: #e5edfd;
+  border: 1px solid #c3dafe;
+  color: #1d4ed8;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quick-actions button:hover {
+  background-color: #d0e2ff;
+}
+
+/* Section headers */
+.dashboard-content section {
+  margin-bottom: 40px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #f3f4f6;
+  color: #374151;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tabs button.active {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  background-color: #ffffff;
+  border-collapse: collapse;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+thead {
+  background-color: #f9fafb;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+td {
+  font-size: 14px;
+  color: #111827;
+}
+
+/* Highlighted text (role links) */
+td.highlight {
+  color: #2563eb;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Status badges */
+.status-active,
+.status-completed,
+.status-in-progress,
+.status-planning {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-active {
+  background-color: #e0f2fe;
+  color: #0284c7;
+}
+
+.status-completed {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.status-in-progress {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.status-planning {
+  background-color: #ede9fe;
+  color: #7c3aed;
+}
+
+/* Action buttons */
+.link {
+  color: #2563eb;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Task Management */
+.task-management button {
+  padding: 10px 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  background-color: #e5edfd;
+  color: #1d4ed8;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+.task-management button:hover {
+  background-color: #d0e2ff;
+}/* Header layout */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.header-left h1 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Logout button */
+.logout-btn {
+  background-color: #ef4444;
+  color: #ffffff;
+  padding: 8px 16px;
+  border: none;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+}
+.employee-filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.employee-filters input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  flex: 1;
+}
+
+.employee-filters select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}.project-form {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-form input,
+.project-form textarea,
+.project-form select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.project-form button {
+  align-self: flex-start;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.project-form button:hover {
+  background-color: #0056b3;
+}/* Filter section used in Employee, Project, and Task management */
+.filters,
+.employee-filters {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.filters input,
+.filters select,
+.employee-filters input,
+.employee-filters select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+  transition: border-color 0.2s ease;
+}
+
+.filters input:focus,
+.filters select:focus,
+.employee-filters input:focus,
+.employee-filters select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.filters select,
+.employee-filters select {
+  min-width: 150px;
+}
+.export-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.export-buttons .action-btn {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.export-buttons .action-btn:hover {
+  background-color: #3730a3;
+}
+.session-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.session-filters input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/* Session and Task Hours Filter Styles */
+.session-filters,
+.task-hours-filters {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.session-filters input,
+.task-hours-filters input,
+.task-hours-filters select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  min-width: 180px;
+}
+
+.task-hours-filters input::placeholder,
+.session-filters input::placeholder {
+  color: #aaa;
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  .session-filters,
+  .task-hours-filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .session-filters input,
+  .task-hours-filters input,
+  .task-hours-filters select {
+    width: 100%;
+  }
+}
+.export-buttons {
+  display: flex;
+  gap: 12px;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.export-buttons button {
+  background: linear-gradient(135deg, #2b5876, #4e4376);
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.export-buttons button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #1d4350, #4e4376);
+}
+
+.export-buttons button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.add-member-select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f3f4f6;
+  color: #1f2937;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  max-width: 200px;
+}
+
+.add-member-select:hover {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.add-member-select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+.team-performance-btn {
+  background-color: #4f46e5;
+  color: white;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin: 10px 0 20px;
+  transition: background 0.2s ease;
+}
+
+.team-performance-btn:hover {
+  background-color: #4338ca;
+}
+
+.add-member-select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f3f4f6;
+  color: #1f2937;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  max-width: 200px;
+}
