@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const User = require('./models/User'); // adjust path if needed
 
-mongoose.connect(process.env.MONGO_URI).then(async () => {
+mongoose.connect(process.env.MONGODB_URI).then(async () => {
   const existing = await User.findOne({ email: 'manager@gmail.com' });
   if (existing) {
     console.log('⚠️ Manager already exists');
