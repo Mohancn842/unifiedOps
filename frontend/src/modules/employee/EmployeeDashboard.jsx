@@ -65,7 +65,7 @@ useEffect(() => {
 useEffect(() => {
   if (activeView === 'notifications' && employeeId) {
     axios
-      .get(`http://localhost:5000/api/notifications/employee/${employeeId}`)
+      .get(`https://unifiedops-backend.onrender.com/api/notifications/employee/${employeeId}`)
       .then(res => setNotifications(res.data))
       .catch(err => console.error('Failed to load notifications:', err));
   }
@@ -84,7 +84,7 @@ useEffect(() => {
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
     axios
-      .get(`http://localhost:5000/api/attendance/${employeeId}/monthly`)
+      .get(https://unifiedops-backend.onrender.com/api/attendance/${employeeId}/monthly`)
       .then((response) => {
         setMonthlyPresent(response.data.presentDays);
         setAttendanceMarked(response.data.todayMarked);
@@ -165,7 +165,7 @@ const markAttendance = async () => {
     try {
       const employeeId = employeeIdRef.current;
       if (employeeId) {
-        await axios.post('http://localhost:5000/api/auth/logout', { employeeId });
+        await axios.post('https://unifiedops-backend.onrender.com/api/auth/logout', { employeeId });
       }
     } catch (err) {
       console.error('Logout failed:', err);
