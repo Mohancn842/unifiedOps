@@ -16,16 +16,18 @@ const EmployeeLogin = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [navigate]);
 
-  const handleLogin = async () => {
-    try {
-      const { token } = await employeeLogin(email, password);
-      localStorage.setItem('employeeToken', token);
-      alert('✅ Employee login successful');
-      navigate('/employee/dashboard', { replace: true });
-    } catch (err) {
-      alert('❌ Invalid employee credentials');
-    }
-  };
+ const handleLogin = async () => {
+  try {
+    const { token } = await employeeLogin(email, password);
+    console.log('✅ Token received:', token); // ✅ Add this line
+    localStorage.setItem('employeeToken', token);
+    alert('✅ Employee login successful');
+    navigate('/employee/dashboard', { replace: true });
+  } catch (err) {
+    alert('❌ Invalid employee credentials');
+  }
+};
+
 
   return (
     <div style={outerStyle}>
