@@ -65,27 +65,26 @@ useEffect(() => {
 useEffect(() => {
   if (activeView === 'notifications' && employeeId) {
     axios
-      .get(`https://unifiedops-backend.onrender.com/api/notifications/employee/${employeeId}`)
+      .get(`http://localhost:5000/api/notifications/employee/${employeeId}`)
       .then(res => setNotifications(res.data))
       .catch(err => console.error('Failed to load notifications:', err));
   }
 }, [activeView, employeeId]);
-  
+
 useEffect(() => {
   if (activeView === 'team' && employeeId) {
     setTeamLoading(true);
-    axios.get(`https://unifiedops-backend.onrender.com/api/employees/team/${employeeId}`)
+    axios.get(`http://localhost:5000/api/employees/team/${employeeId}`)
       .then(res => setTeamMembers(res.data))
       .catch(err => console.error('❌ Team fetch error:', err))
       .finally(() => setTeamLoading(false));
   }
 }, [activeView, employeeId]);
-
 // ✅ Fetch attendance once when activeView is "attendance"
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-    
-      axios.get(`https://unifiedops-backend.onrender.com/api/attendance/${employeeId}/monthly`)
+    axios
+      .get(`http://localhost:5000/api/attendance/${employeeId}/monthly`)
       .then((response) => {
         setMonthlyPresent(response.data.presentDays);
         setAttendanceMarked(response.data.todayMarked);
@@ -97,12 +96,11 @@ useEffect(() => {
 }, [activeView, employeeId]);
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-    axios.get(`https://unifiedops-backend.onrender.com/api/leaves/${employeeId}/history`)
+    axios.get(`http://localhost:5000/api/leaves/${employeeId}/history`)
       .then(res => setLeaveHistory(res.data))
       .catch(err => console.error('Failed to load leave history', err));
   }
 }, [activeView, employeeId]);
-
 
 // ✅ Mark Attendance Function
 const markAttendance = async () => {
@@ -110,15 +108,17 @@ const markAttendance = async () => {
     console.error('❌ employeeId not found.');
     return;
   }
-try {
-  await axios.post('https://unifiedops-backend.onrender.com/api/attendance/mark', { employeeId });
-  setAttendanceMarked(true);
-  setMonthlyPresent(prev => prev + 1);
-  alert('✅ Attendance marked successfully!');
-} catch (err) {
-  console.error('❌ Attendance error:', err);
-  alert('Failed to mark attendance. You may have already marked it.');
-}
+
+  try {
+    await axios.post('http://localhost:5000/api/attendance/mark', { employeeId });
+    setAttendanceMarked(true);
+    setMonthlyPresent(prev => prev + 1);
+    alert('✅ Attendance marked successfully!');
+  } catch (err) {
+    console.error('❌ Attendance error:', err);
+    alert('Failed to mark attendance. You may have already marked it.');
+  }
+};
 
 // ✅ Apply Leave Functionconst
  const submitLeave = async () => {
@@ -132,22 +132,21 @@ try {
     return;
   }
 
-try {
-  await axios.post('https://unifiedops-backend.onrender.com/api/leaves/apply', {
-    employeeId,
-    date: leaveDate,
-    reason: leaveReason
-  });
+  try {
+    await axios.post('http://localhost:5000/api/leaves/apply', {
+      employeeId,
+      date: leaveDate,
+      reason: leaveReason
+    });
 
+    const res = await axios.get(`http://localhost:5000/api/leaves/${employeeId}/history`);
+    setLeaveHistory(res.data);
 
-  const res = await axios.get(`https://unifiedops-backend.onrender.com/api/leaves/${employeeId}/history`);
-setLeaveHistory(res.data);
+    alert('Leave application submitted.');
 
-alert('Leave application submitted.');
-
-setLeaveDate('');
-setLeaveReason('');
-setShowLeaveForm(false);
+    setLeaveDate('');
+    setLeaveReason('');
+    setShowLeaveForm(false);
   } catch (err) {
     console.error('Leave submission error:', err);
     if (err.response?.data?.message) {
@@ -166,8 +165,7 @@ setShowLeaveForm(false);
     try {
       const employeeId = employeeIdRef.current;
       if (employeeId) {
-       await axios.post('https://unifiedops-backend.onrender.com/api/auth/logout', { employeeId });
-
+        await axios.post('http://localhost:5000/api/auth/logout', { employeeId });
       }
     } catch (err) {
       console.error('Logout failed:', err);
@@ -211,11 +209,11 @@ useEffect(() => {
       const employeeId = decoded.userId;
       employeeIdRef.current = employeeId;
 
-      axios.get(`https://unifiedops-backend.onrender.com/api/employees/${employeeId}`)
-  .then(res => {
-    setEmployee(res.data);
-    return axios.get(`https://unifiedops-backend.onrender.com/api/sessions/${employeeId}`);
-  })
+      axios.get(`http://localhost:5000/api/employees/${employeeId}`)
+        .then(res => {
+          setEmployee(res.data);
+          return axios.get(`http://localhost:5000/api/sessions/${employeeId}`);
+        })
         .then(res => {
           setSessions(res.data);
           setLoading(false);
@@ -231,7 +229,7 @@ useEffect(() => {
   }, [logoutAndRedirect]);
   const id = employeeIdRef.current;
 if (id) {
- axios.get(`https://unifiedops-backend.onrender.com/api/tasks/history/${id}`)
+  axios.get(`http://localhost:5000/api/tasks/history/${id}`)
     .then(res => {
       setTaskHistory(res.data);
     })
@@ -683,7 +681,7 @@ const calculateProjectProgress = (projectName) => {
         {/* ✅ Mark all as read */}
         <button
           onClick={async () => {
-           await axios.patch(`https://unifiedops-backend.onrender.com/api/notifications/employee/${employeeId}/markAllAsRead`);
+            await axios.patch(`http://localhost:5000/api/notifications/employee/${employeeId}/markAllAsRead`);
             setNotifications(notifications.map(n => ({ ...n, isRead: true })));
           }}
           style={{
@@ -708,7 +706,7 @@ const calculateProjectProgress = (projectName) => {
             <div
               key={n._id}
               onClick={async () => {
-              await axios.patch(`https://unifiedops-backend.onrender.com/api/notifications/${n._id}/markAsRead`);
+                await axios.patch(`http://localhost:5000/api/notifications/${n._id}/markAsRead`);
                 setNotifications(prev =>
                   prev.map(item =>
                     item._id === n._id ? { ...item, isRead: true } : item
