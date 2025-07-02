@@ -84,7 +84,7 @@ useEffect(() => {
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
     axios
-      .get(https://unifiedops-backend.onrender.com/api/attendance/${employeeId}/monthly`)
+     axios.get(`https://unifiedops-backend.onrender.com/api/attendance/${employeeId}/monthly`)
       .then((response) => {
         setMonthlyPresent(response.data.presentDays);
         setAttendanceMarked(response.data.todayMarked);
@@ -165,7 +165,8 @@ const markAttendance = async () => {
     try {
       const employeeId = employeeIdRef.current;
       if (employeeId) {
-        await axios.post('https://unifiedops-backend.onrender.com/api/auth/logout', { employeeId });
+       await axios.post('https://unifiedops-backend.onrender.com/api/auth/logout', { employeeId });
+
       }
     } catch (err) {
       console.error('Logout failed:', err);
