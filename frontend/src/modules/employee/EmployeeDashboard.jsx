@@ -83,8 +83,8 @@ useEffect(() => {
 // ✅ Fetch attendance once when activeView is "attendance"
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-    axios
-     axios.get(`https://unifiedops-backend.onrender.com/api/attendance/${employeeId}/monthly`)
+    
+      axios.get(`https://unifiedops-backend.onrender.com/api/attendance/${employeeId}/monthly`)
       .then((response) => {
         setMonthlyPresent(response.data.presentDays);
         setAttendanceMarked(response.data.todayMarked);
