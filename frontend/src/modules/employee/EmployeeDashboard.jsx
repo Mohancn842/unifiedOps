@@ -165,7 +165,7 @@ const markAttendance = async () => {
     try {
       const employeeId = employeeIdRef.current;
       if (employeeId) {
-        await axios.post('http://localhost:5000/api/auth/logout', { employeeId });
+      await axios.post('https://unifiedops-backend.onrender.com/api/auth/logout', { employeeId });
       }
     } catch (err) {
       console.error('Logout failed:', err);
