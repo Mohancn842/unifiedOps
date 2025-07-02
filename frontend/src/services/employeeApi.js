@@ -1,8 +1,12 @@
 // src/services/employeeApi.js
 import axios from 'axios';
 
+const API = axios.create({
+  baseURL: 'https://unifiedops-backend.onrender.com/api',
+});
+
 export const employeeLogin = async (email, password) => {
-  const response = await axios.post('http://localhost:5000/api/auth/login', {
+  const response = await API.post('/auth/login', {
     email,
     password,
     role: 'employee' // ✅ REQUIRED
