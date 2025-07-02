@@ -211,7 +211,8 @@ useEffect(() => {
       axios.get(`https://unifiedops-backend.onrender.com/api/employees/${employeeId}`)
         .then(res => {
           setEmployee(res.data);
-          return axios.get(`http://localhost:5000/api/sessions/${employeeId}`);
+           return axios.get(`https://unifiedops-backend.onrender.com/api/sessions/${employeeId}`);
+
         })
         .then(res => {
           setSessions(res.data);
