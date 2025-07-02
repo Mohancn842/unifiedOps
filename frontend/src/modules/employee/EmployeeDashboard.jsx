@@ -210,11 +210,11 @@ useEffect(() => {
       const employeeId = decoded.userId;
       employeeIdRef.current = employeeId;
 
-      axios.get(`http://localhost:5000/api/employees/${employeeId}`)
-        .then(res => {
-          setEmployee(res.data);
-          return axios.get(`http://localhost:5000/api/sessions/${employeeId}`);
-        })
+      axios.get(`https://unifiedops-backend.onrender.com/api/employees/${employeeId}`)
+  .then(res => {
+    setEmployee(res.data);
+    return axios.get(`https://unifiedops-backend.onrender.com/api/sessions/${employeeId}`);
+  })
         .then(res => {
           setSessions(res.data);
           setLoading(false);
