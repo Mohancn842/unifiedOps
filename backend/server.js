@@ -6,8 +6,13 @@ require('dotenv').config();
 
 const app = express();
 
+// ✅ CORS setup to allow frontend on Render
+app.use(cors({
+  origin: 'https://unifiedops-frontend.onrender.com',
+  credentials: true,
+}));
+
 // ✅ Middleware
-app.use(cors());
 app.use(express.json());
 
 // ✅ Serve static files (e.g., uploaded contracts)
@@ -56,15 +61,13 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
-mongoose.connect(MONGODB_URI, {
- 
-})
-.then(() => {
-  console.log('✅ Connected to MongoDB Atlas');
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+mongoose.connect(MONGODB_URI)
+  .then(() => {
+    console.log('✅ Connected to MongoDB Atlas');
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err);
   });
-})
-.catch((err) => {
-  console.error('❌ MongoDB connection error:', err);
-});
