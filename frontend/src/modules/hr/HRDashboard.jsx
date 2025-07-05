@@ -205,7 +205,7 @@ const handleInputChange = (e) => {
 const handleAddJob = async (e) => {
   e.preventDefault();
   try {
-    await axios.post('http://localhost:5000/api/jobs/add', newJob);
+  await axios.post('https://unifiedops-backend.onrender.com/api/jobs/add', newJob);
     setNewJob({
       title: '',
       department: '',
@@ -243,7 +243,7 @@ useEffect(() => {
 const handleLeaveAction = (leaveId, status) => {
   const backendAction = status === 'Approved' ? 'approve' : 'reject';
 
-  fetch(`http://localhost:5000/api/leaves/${leaveId}/${backendAction}`, {
+  fetch(`https://unifiedops-backend.onrender.com/api/leaves/${leaveId}/${backendAction}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -260,14 +260,14 @@ const handleLeaveAction = (leaveId, status) => {
 useEffect(() => {
   if (activeTab === 'leaves') {
     // Fetch leave requests
-    fetch('http://localhost:5000/api/leaves/all')
+   fetch('https://unifiedops-backend.onrender.com/api/leaves/all')
       .then(res => res.json())
       .then(data => setLeaves(data))
       .catch(err => console.error('Error fetching leave data', err));
 
     // Fetch attendance records
     const query = attendanceDate ? `?date=${attendanceDate}` : '';
-    fetch(`http://localhost:5000/api/attendance/all${query}`)
+    fetch(`https://unifiedops-backend.onrender.com/api/attendance/all${query}`)
       .then(res => res.json())
       .then(data => {
         const sorted = [...data].sort((a, b) => {
