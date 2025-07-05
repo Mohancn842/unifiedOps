@@ -204,14 +204,14 @@ const handleAddToProject = async (projectId, employeeId) => {
   if (!employeeId) return;
 
   try {
-    await axios.post(`http://localhost:5000/api/projects/${projectId}/add-member`, {
+    await axios.post(`https://unifiedops-backend.onrender.com/api/projects/${projectId}/add-member`, {
       employeeId,
     });
 
     // 🔄 Refresh project & employee data after update
     const [empData, projData] = await Promise.all([
       fetchAllEmployeesWithProjects(),
-      axios.get('http://localhost:5000/api/projects'),
+     axios.get('https://unifiedops-backend.onrender.com/api/projects'),
     ]);
     setEmployees(empData);
     setProjects(projData.data);
