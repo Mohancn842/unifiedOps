@@ -64,8 +64,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (activeView === 'notifications' && employeeId) {
-    axios
-      .get(`http://localhost:5000/api/notifications/employee/${employeeId}`)
+       axios.get(`https://unifiedops-backend.onrender.com/api/notifications/employee/${employeeId}`)
       .then(res => setNotifications(res.data))
       .catch(err => console.error('Failed to load notifications:', err));
   }
@@ -74,7 +73,7 @@ useEffect(() => {
 useEffect(() => {
   if (activeView === 'team' && employeeId) {
     setTeamLoading(true);
-    axios.get(`http://localhost:5000/api/employees/team/${employeeId}`)
+  axios.get(`https://unifiedops-backend.onrender.com/api/employees/team/${employeeId}`)
       .then(res => setTeamMembers(res.data))
       .catch(err => console.error('❌ Team fetch error:', err))
       .finally(() => setTeamLoading(false));
