@@ -282,7 +282,7 @@ useEffect(() => {
 
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/employees')
+   fetch('https://unifiedops-backend.onrender.com/api/employees')
       .then(res => res.json())
       .then(data => setEmployees(data))
       .catch(err => console.error('Error fetching employees', err));
@@ -296,7 +296,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (activeTab === 'leaves') {
-    fetch('http://localhost:5000/api/leaves/all')
+    fetch('https://unifiedops-backend.onrender.com/api/leaves/all')
       .then(res => res.json())
       .then(data => setLeaves(data))
       .catch(err => console.error('Error fetching leave data', err));
@@ -461,7 +461,15 @@ useEffect(() => {
                       <td>{emp.contract_expiry?.split('T')[0]}</td>
                       <td>
                         {emp.contract_file ? (
-                          <a href={`http://localhost:5000/${emp.contract_file}`} target="_blank" rel="noreferrer" className="link">View</a>
+                         <a
+  href={`http://localhost:5000/${emp.contract_file}`}
+  target="_blank"
+  rel="noreferrer"
+  className="link"
+>
+  View
+</a>
+
                         ) : (<em style={{ color: '#999' }}>None</em>)}
                       </td>
                     </tr>
