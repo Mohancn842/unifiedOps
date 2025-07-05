@@ -82,8 +82,7 @@ useEffect(() => {
 // ✅ Fetch attendance once when activeView is "attendance"
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-    axios
-      .get(`http://localhost:5000/api/attendance/${employeeId}/monthly`)
+   axios.get(`https://unifiedops-backend.onrender.com/api/attendance/${employeeId}/monthly`)
       .then((response) => {
         setMonthlyPresent(response.data.presentDays);
         setAttendanceMarked(response.data.todayMarked);
@@ -95,7 +94,7 @@ useEffect(() => {
 }, [activeView, employeeId]);
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-    axios.get(`http://localhost:5000/api/leaves/${employeeId}/history`)
+  axios.get(`https://unifiedops-backend.onrender.com/api/leaves/${employeeId}/history`)
       .then(res => setLeaveHistory(res.data))
       .catch(err => console.error('Failed to load leave history', err));
   }
