@@ -679,7 +679,7 @@ const calculateProjectProgress = (projectName) => {
         {/* ✅ Mark all as read */}
         <button
           onClick={async () => {
-            await axios.patch(`http://localhost:5000/api/notifications/employee/${employeeId}/markAllAsRead`);
+            await axios.patch(`https://unifiedops-backend.onrender.com/api/notifications/employee/${employeeId}/markAllAsRead`);
             setNotifications(notifications.map(n => ({ ...n, isRead: true })));
           }}
           style={{
