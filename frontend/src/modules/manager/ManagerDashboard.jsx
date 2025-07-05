@@ -229,7 +229,7 @@ const handleAddToProject = async (projectId, employeeId) => {
 
     // ✅ Step 1: Fetch employees with tasks
     const { data: employeesWithTasks } = await axios.get(
-      'http://localhost:5000/api/employees/with-tasks'
+     'https://unifiedops-backend.onrender.com/api/employees/with-tasks'
     );
 
     console.log("🚀 All employees with tasks:", employeesWithTasks);
@@ -258,7 +258,7 @@ const handleAddToProject = async (projectId, employeeId) => {
       teamMembers.map(async (emp) => {
         try {
           const { data: perf } = await axios.get(
-            `http://localhost:5000/api/employees/${emp._id}/performance`
+           `https://unifiedops-backend.onrender.com/api/employees/${emp._id}/performance`
           );
           console.log(`📊 Performance for ${emp.name}:`, perf);
           return {
@@ -424,7 +424,15 @@ const handleAddToProject = async (projectId, employeeId) => {
               <td>{emp.contract_expiry?.split('T')[0]}</td>
               <td>
                 {emp.contract_file ? (
-                  <a href={`http://localhost:5000/${emp.contract_file}`} target="_blank" rel="noreferrer" className="link">View</a>
+                 <a
+  href={`https://unifiedops-backend.onrender.com/${emp.contract_file}`}
+  target="_blank"
+  rel="noreferrer"
+  className="link"
+>
+  View
+</a>
+
                 ) : (<em style={{ color: '#999' }}>None</em>)}
               </td>
             </tr>
