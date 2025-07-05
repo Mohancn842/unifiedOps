@@ -241,7 +241,7 @@ if (id) {
       if (employeeId) {
         const data = JSON.stringify({ employeeId });
         navigator.sendBeacon(
-          'http://localhost:5000/api/auth/logout',
+          'https://unifiedops-backend.onrender.com/api/auth/logout',
           new Blob([data], { type: 'application/json' })
         );
       }
@@ -704,7 +704,7 @@ const calculateProjectProgress = (projectName) => {
             <div
               key={n._id}
               onClick={async () => {
-                await axios.patch(`http://localhost:5000/api/notifications/${n._id}/markAsRead`);
+              await axios.patch(`https://unifiedops-backend.onrender.com/api/notifications/${n._id}/markAsRead`);
                 setNotifications(prev =>
                   prev.map(item =>
                     item._id === n._id ? { ...item, isRead: true } : item
