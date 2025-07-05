@@ -61,7 +61,7 @@ const [sessionEndDate, setSessionEndDate] = useState('');
 
 
 useEffect(() => {
- axios.get('https://unifiedops-backend.onrender.com/api/sessions');
+ axios.get('https://unifiedops-backend.onrender.com/api/sessions')
     .then((res) => {
       console.log("Fetched sessions:", res.data);
       setSessions(res.data);
