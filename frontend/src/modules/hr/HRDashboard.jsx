@@ -96,7 +96,7 @@ useEffect(() => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/employees/${selectedEmployeeId}/performance`
+      `https://unifiedops-backend.onrender.com/api/employees/${selectedEmployeeId}/performance`
       );
       if (!res.ok) throw new Error('Bad response from server');
       const data = await res.json();
@@ -113,7 +113,7 @@ useEffect(() => {
 const handleViewPayrollHistory = async () => {
   if (!showHistory) {
     try {
-      const res = await axios.get('http://localhost:5000/api/payroll/history');
+     const res = await axios.get('https://unifiedops-backend.onrender.com/api/payroll/history');
       setPayrollHistory(res.data);
     } catch (err) {
       console.error('Error fetching payroll history:', err);
@@ -125,11 +125,10 @@ const handleViewPayrollHistory = async () => {
 
 useEffect(() => {
   if (activeTab === 'payroll') {
-    fetch('http://localhost:5000/api/employees')
+   fetch('https://unifiedops-backend.onrender.com/api/employees')
       .then(res => res.json())
       .then(data => setAllEmployees(data));
-
-    fetch(`http://localhost:5000/api/payroll/paid/${currentMonth}`)
+   fetch(`https://unifiedops-backend.onrender.com/api/payroll/paid/${currentMonth}`)
       .then(res => res.json())
       .then(data => setPaidEmployees(data.map(p => p.employee._id))); // only IDs
   }
