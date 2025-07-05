@@ -61,7 +61,7 @@ const [sessionEndDate, setSessionEndDate] = useState('');
 
 
 useEffect(() => {
-  axios.get('http://localhost:5000/api/sessions')
+ axios.get('https://unifiedops-backend.onrender.com/api/sessions');
     .then((res) => {
       console.log("Fetched sessions:", res.data);
       setSessions(res.data);
@@ -175,7 +175,7 @@ const exportExcel = (rows, columns, fileName) => {
       try {
         const empData = await fetchAllEmployeesWithProjects();
         const taskData = await fetchEmployeesWithTasks();
-        const projData = await axios.get('http://localhost:5000/api/projects');
+       const projData = await axios.get('https://unifiedops-backend.onrender.com/api/projects');
         const taskList = await fetchTasks();
         setEmployees(empData);
         setEmployeesWithTasks(taskData);
