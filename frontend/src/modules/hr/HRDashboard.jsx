@@ -157,12 +157,12 @@ const handlePaySelected = async () => {
   try {
     setIsLoading(true);
 
-    await axios.post('http://localhost:5000/api/payroll/pay', {
+    await axios.post('https://unifiedops-backend.onrender.com/api/payroll/pay', {
       employeeIds: selectedEmployees,
       month: currentMonth,
     });
 
-    const { data } = await axios.get(`http://localhost:5000/api/payroll/paid/${currentMonth}`);
+    const { data } = await axios.get(`https://unifiedops-backend.onrender.com/api/payroll/paid/${currentMonth}`);
     setPaidEmployees(data.map(p => p.employee._id)); // ensure only IDs
 
     setSelectedEmployees([]);
@@ -178,7 +178,7 @@ const handlePaySelected = async () => {
 const fetchJobs = async () => {
   try {
     console.log('🔄 Fetching jobs...');
-    const res = await fetch('http://localhost:5000/api/jobs');
+    const res = await fetch('https://unifiedops-backend.onrender.com/api/jobs');
     const data = await res.json();
     console.log('📦 Jobs fetched from backend:', data); // ✅ Confirm what was received
     setJobs(data); // ✅ Sets all jobs to state
