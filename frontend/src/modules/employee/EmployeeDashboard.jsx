@@ -108,7 +108,7 @@ const markAttendance = async () => {
   }
 
   try {
-    await axios.post('http://localhost:5000/api/attendance/mark', { employeeId });
+    await axios.post('https://unifiedops-backend.onrender.com/api/attendance/mark', { employeeId });
     setAttendanceMarked(true);
     setMonthlyPresent(prev => prev + 1);
     alert('✅ Attendance marked successfully!');
@@ -131,13 +131,13 @@ const markAttendance = async () => {
   }
 
   try {
-    await axios.post('http://localhost:5000/api/leaves/apply', {
+    await axios.post('https://unifiedops-backend.onrender.com/api/leaves/apply', {
       employeeId,
       date: leaveDate,
       reason: leaveReason
     });
 
-    const res = await axios.get(`http://localhost:5000/api/leaves/${employeeId}/history`);
+    const res = await axios.get(`https://unifiedops-backend.onrender.com/api/leaves/${employeeId}/history`);
     setLeaveHistory(res.data);
 
     alert('Leave application submitted.');
