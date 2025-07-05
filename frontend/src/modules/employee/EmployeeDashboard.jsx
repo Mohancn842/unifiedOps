@@ -794,11 +794,8 @@ case 'info':
         {employee.contract_file ? (
           <div style={{ marginTop: '10px' }}>
             <b>Offer Letter:</b>{' '}
-            <a
-              href={`http://localhost:5000/${employee.contract_file}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+           <a href={`https://unifiedops-backend.onrender.com/${employee.contract_file}`} target="_blank" rel="noopener noreferrer">
+
               <button
                 style={{
                   marginLeft: '10px',
