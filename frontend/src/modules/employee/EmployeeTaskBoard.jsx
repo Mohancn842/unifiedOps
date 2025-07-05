@@ -18,7 +18,7 @@ const EmployeeTaskBoard = () => {
 
   const fetchEmployeeWithTasks = async (empId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/employees/${empId}`);
+     const res = await axios.get(`https://unifiedops-backend.onrender.com/api/employees/${empId}`);
       setEmployee(res.data);
       const allTasks = res.data.projects?.flatMap(p =>
         p.tasks?.map(t => ({ ...t, projectName: p.name })) || []
@@ -31,7 +31,10 @@ const EmployeeTaskBoard = () => {
 
   const changeStatus = async (taskId, newStatus) => {
     try {
-      await axios.patch(`http://localhost:5000/api/tasks/${taskId}/status`, { status: newStatus });
+     await axios.patch(`https://unifiedops-backend.onrender.com/api/tasks/${taskId}/status`, {
+  status: newStatus,
+});
+
       fetchEmployeeWithTasks(employee._id);
     } catch (err) {
       console.error('Error updating status:', err);
@@ -43,7 +46,10 @@ const EmployeeTaskBoard = () => {
     const inProgressTasks = tasks.filter(t => t.status === 'In Progress');
     await Promise.all(
       inProgressTasks.map(task =>
-        axios.patch(`http://localhost:5000/api/tasks/${task._id}/status`, { status: 'Assigned' })
+       axios.patch(`https://unifiedops-backend.onrender.com/api/tasks/${task._id}/status`, {
+  status: 'Assigned',
+});
+
       )
     );
     navigate('/employee/dashboard');
