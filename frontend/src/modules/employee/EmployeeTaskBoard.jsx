@@ -46,9 +46,7 @@ const EmployeeTaskBoard = () => {
     const inProgressTasks = tasks.filter(t => t.status === 'In Progress');
     await Promise.all(
       inProgressTasks.map(task =>
-       axios.patch(`https://unifiedops-backend.onrender.com/api/tasks/${task._id}/status`, {
-  status: 'Assigned',
-});
+      axios.patch(`https://unifiedops-backend.onrender.com/api/tasks/${task._id}/status`, { status: 'Assigned' })
 
       )
     );
