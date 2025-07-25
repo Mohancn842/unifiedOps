@@ -23,8 +23,8 @@ const TaskManager = () => {
   const loadAll = async () => {
     const [taskData, projectData, employeeData] = await Promise.all([
       fetchTasks(),
-      axios.get('https://unifiedops-backend.onrender.com/api/projects'),
-  axios.get('https://unifiedops-backend.onrender.com/api/employees/full-details')
+      axios.get('/api/projects'),
+  axios.get('/api/employees/full-details')
 
     ]);
     setTasks(taskData);

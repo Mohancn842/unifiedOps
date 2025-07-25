@@ -1,8 +1,7 @@
 // src/services/projectService.js
 import axios from 'axios';
 
-const API_BASE = 'https://unifiedops-backend.onrender.com/api';
-
+const API_BASE = '/api';
 
 export const addProject = async (projectData) => {
   const token = localStorage.getItem('token');

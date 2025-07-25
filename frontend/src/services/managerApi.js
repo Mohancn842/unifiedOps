@@ -3,8 +3,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-baseURL: 'https://unifiedops-backend.onrender.com/api',
-
+baseURL: '/api',
 });
 
 API.interceptors.request.use((config) => {

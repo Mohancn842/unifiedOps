@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://unifiedops-backend.onrender.com/api',
+  baseURL: '/api',
 });
 
 export const employeeLogin = async (email, password) => {

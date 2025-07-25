@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API = 'https://unifiedops-backend.onrender.com/api/tasks';
+const API = '/api/tasks';
 
 
 export const assignTask = async (taskData) => {

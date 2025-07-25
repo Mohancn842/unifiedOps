@@ -21,7 +21,7 @@ const HomePage = () => {
         width: '350px'
       }}>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
-          Unified<span style={{ color: '#007bff' }}>Ops</span>
+          Manage<span style={{ color: '#007bff' }}>Nest</span>
         </h1>
         <p style={{ color: '#555', marginBottom: '30px' }}>
           Streamlined Project & HR Management
@@ -47,6 +47,37 @@ const HomePage = () => {
         >
           HR Login
         </button>
+
+        
+         <button
+          onClick={() => navigate('marketempLogin')}
+          style={buttonStyle}
+        >
+          Marketing Team Login
+        </button>
+
+      
+
+ <button
+          onClick={() => navigate('/suportemployeelogin')}
+          style={buttonStyle}
+        >
+          Support Team Login
+        </button>
+
+         <button
+          onClick={() => navigate('/salesemployee/login')}
+          style={buttonStyle}
+        >
+          Sales Team Login
+        </button>
+        <button
+          onClick={() => navigate('/amount/login')}
+          style={buttonStyle}
+        >
+          Account Team Login
+        </button>
+
       </div>
     </div>
   );

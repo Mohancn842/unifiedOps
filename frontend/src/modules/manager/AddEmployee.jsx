@@ -166,7 +166,7 @@ const AddEmployee = () => {
       }
       data.append('contract_file', pdfFile); // Auto-generated contract
 
-      const response = await axios.post('https://unifiedops-backend.onrender.com/api/employees', data);
+      const response = await axios.post('/api/employees', data);
       setMessage({ type: 'success', text: response.data.message });
 
       setFormData({

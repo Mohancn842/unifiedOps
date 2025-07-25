@@ -18,7 +18,7 @@ const AddProject = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get('https://unifiedops-backend.onrender.com/api/projects');
+      const res = await axios.get('/api/projects');
       setProjects(res.data);
     } catch (err) {
       console.error('Failed to fetch projects:', err);
@@ -33,7 +33,7 @@ const AddProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     await axios.post('https://unifiedops-backend.onrender.com/api/projects', form);
+     await axios.post('/api/projects', form);
       alert('✅ Project added successfully!');
       setForm({ name: '', description: '', start_date: '', end_date: '', status: 'Planned' });
       fetchProjects(); // Refresh list

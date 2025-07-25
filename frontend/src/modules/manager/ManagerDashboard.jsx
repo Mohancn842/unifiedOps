@@ -25,6 +25,7 @@ const ManagerDashboard = () => {
   const taskRef = useRef(null);
   const reportRef = useRef(null);
 
+
   // Scroll to Section
   const scrollToSection = (ref) => {
     if (ref?.current) {
@@ -59,9 +60,8 @@ const [sessionSearch, setSessionSearch] = useState('');
 const [sessionStartDate, setSessionStartDate] = useState('');
 const [sessionEndDate, setSessionEndDate] = useState('');
 
-
 useEffect(() => {
- axios.get('https://unifiedops-backend.onrender.com/api/sessions')
+ axios.get('/api/sessions')
     .then((res) => {
       console.log("Fetched sessions:", res.data);
       setSessions(res.data);
@@ -146,8 +146,6 @@ const exportExcel = (rows, columns, fileName) => {
   saveAs(new Blob([wbout], { type: 'application/octet-stream' }), `${fileName}.xlsx`);
 };
 
-
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     const loggedOut = sessionStorage.getItem('loggedOut');
@@ -156,10 +154,6 @@ const exportExcel = (rows, columns, fileName) => {
       navigate('/manager/login', { replace: true });
       return;
     }
-
-
-    
-    // 
     // ================= Export Helpers =================
 
 // Utility Export Function
@@ -175,7 +169,7 @@ const exportExcel = (rows, columns, fileName) => {
       try {
         const empData = await fetchAllEmployeesWithProjects();
         const taskData = await fetchEmployeesWithTasks();
-       const projData = await axios.get('https://unifiedops-backend.onrender.com/api/projects');
+        const projData = await axios.get('/api/projects');
         const taskList = await fetchTasks();
         setEmployees(empData);
         setEmployeesWithTasks(taskData);
@@ -187,6 +181,7 @@ const exportExcel = (rows, columns, fileName) => {
     };
     loadData();
   }, []);
+
 const formatSessionDuration = (start, end) => {
   if (!end) return '-';
   const ms = new Date(end) - new Date(start);
@@ -204,14 +199,14 @@ const handleAddToProject = async (projectId, employeeId) => {
   if (!employeeId) return;
 
   try {
-    await axios.post(`https://unifiedops-backend.onrender.com/api/projects/${projectId}/add-member`, {
+    await axios.post(`/api/projects/${projectId}/add-member`, {
       employeeId,
     });
 
     // 🔄 Refresh project & employee data after update
     const [empData, projData] = await Promise.all([
       fetchAllEmployeesWithProjects(),
-     axios.get('https://unifiedops-backend.onrender.com/api/projects'),
+     axios.get('/api/projects'),
     ]);
     setEmployees(empData);
     setProjects(projData.data);
@@ -229,7 +224,7 @@ const handleAddToProject = async (projectId, employeeId) => {
 
     // ✅ Step 1: Fetch employees with tasks
     const { data: employeesWithTasks } = await axios.get(
-     'https://unifiedops-backend.onrender.com/api/employees/with-tasks'
+     '/api/employees/with-tasks'
     );
 
     console.log("🚀 All employees with tasks:", employeesWithTasks);
@@ -258,7 +253,7 @@ const handleAddToProject = async (projectId, employeeId) => {
       teamMembers.map(async (emp) => {
         try {
           const { data: perf } = await axios.get(
-           `https://unifiedops-backend.onrender.com/api/employees/${emp._id}/performance`
+          `/api/employees/${emp._id}/performance`
           );
           console.log(`📊 Performance for ${emp.name}:`, perf);
           return {
@@ -425,7 +420,7 @@ const handleAddToProject = async (projectId, employeeId) => {
               <td>
                 {emp.contract_file ? (
                  <a
-  href={`https://unifiedops-backend.onrender.com/${emp.contract_file}`}
+  href={`/uploads/contracts/${emp.contract_file}`}
   target="_blank"
   rel="noreferrer"
   className="link"
@@ -984,6 +979,7 @@ const handleAddToProject = async (projectId, employeeId) => {
     </>
   )}
 </section>
+
 
       </main>
     </div>

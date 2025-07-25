@@ -95,9 +95,7 @@ useEffect(() => {
     if (!selectedEmployeeId) return;
 
     try {
-      const res = await fetch(
-      `https://unifiedops-backend.onrender.com/api/employees/${selectedEmployeeId}/performance`
-      );
+      const res = await fetch(`/api/employees/${selectedEmployeeId}/performance`);
       if (!res.ok) throw new Error('Bad response from server');
       const data = await res.json();
       setPerformanceStats(data);
@@ -113,7 +111,7 @@ useEffect(() => {
 const handleViewPayrollHistory = async () => {
   if (!showHistory) {
     try {
-     const res = await axios.get('https://unifiedops-backend.onrender.com/api/payroll/history');
+     const res = await axios.get('/api/payroll/history');
       setPayrollHistory(res.data);
     } catch (err) {
       console.error('Error fetching payroll history:', err);
@@ -125,10 +123,10 @@ const handleViewPayrollHistory = async () => {
 
 useEffect(() => {
   if (activeTab === 'payroll') {
-   fetch('https://unifiedops-backend.onrender.com/api/employees')
+   fetch('/api/employees')
       .then(res => res.json())
       .then(data => setAllEmployees(data));
-   fetch(`https://unifiedops-backend.onrender.com/api/payroll/paid/${currentMonth}`)
+   fetch(`/api/payroll/paid/${currentMonth}`)
       .then(res => res.json())
       .then(data => setPaidEmployees(data.map(p => p.employee._id))); // only IDs
   }
@@ -157,12 +155,12 @@ const handlePaySelected = async () => {
   try {
     setIsLoading(true);
 
-    await axios.post('https://unifiedops-backend.onrender.com/api/payroll/pay', {
+    await axios.post('/api/payroll/pay', {
       employeeIds: selectedEmployees,
       month: currentMonth,
     });
 
-    const { data } = await axios.get(`https://unifiedops-backend.onrender.com/api/payroll/paid/${currentMonth}`);
+    const { data } = await axios.get(`/api/payroll/paid/${currentMonth}`);
     setPaidEmployees(data.map(p => p.employee._id)); // ensure only IDs
 
     setSelectedEmployees([]);
@@ -178,7 +176,8 @@ const handlePaySelected = async () => {
 const fetchJobs = async () => {
   try {
     console.log('🔄 Fetching jobs...');
-    const res = await fetch('https://unifiedops-backend.onrender.com/api/jobs');
+    const res = await fetch('/api/jobs');
+
     const data = await res.json();
     console.log('📦 Jobs fetched from backend:', data); // ✅ Confirm what was received
     setJobs(data); // ✅ Sets all jobs to state
@@ -205,7 +204,8 @@ const handleInputChange = (e) => {
 const handleAddJob = async (e) => {
   e.preventDefault();
   try {
-  await axios.post('https://unifiedops-backend.onrender.com/api/jobs/add', newJob);
+  await axios.post('/api/jobs/add', newJob);
+
     setNewJob({
       title: '',
       department: '',
@@ -243,10 +243,11 @@ useEffect(() => {
 const handleLeaveAction = (leaveId, status) => {
   const backendAction = status === 'Approved' ? 'approve' : 'reject';
 
-  fetch(`https://unifiedops-backend.onrender.com/api/leaves/${leaveId}/${backendAction}`, {
+  fetch(`/api/leaves/${leaveId}/${backendAction}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
   })
+
     .then(res => res.json())
     .then(() => {
       setLeaves(prev =>
@@ -260,14 +261,15 @@ const handleLeaveAction = (leaveId, status) => {
 useEffect(() => {
   if (activeTab === 'leaves') {
     // Fetch leave requests
-   fetch('https://unifiedops-backend.onrender.com/api/leaves/all')
+   fetch('/api/leaves/all')
       .then(res => res.json())
       .then(data => setLeaves(data))
       .catch(err => console.error('Error fetching leave data', err));
 
     // Fetch attendance records
     const query = attendanceDate ? `?date=${attendanceDate}` : '';
-    fetch(`https://unifiedops-backend.onrender.com/api/attendance/all${query}`)
+    fetch(`/api/attendance/all${query}`)
+
       .then(res => res.json())
       .then(data => {
         const sorted = [...data].sort((a, b) => {
@@ -282,7 +284,7 @@ useEffect(() => {
 
 
   useEffect(() => {
-   fetch('https://unifiedops-backend.onrender.com/api/employees')
+   fetch('/api/employees')
       .then(res => res.json())
       .then(data => setEmployees(data))
       .catch(err => console.error('Error fetching employees', err));
@@ -296,7 +298,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (activeTab === 'leaves') {
-    fetch('https://unifiedops-backend.onrender.com/api/leaves/all')
+    fetch('/api/leaves/all')
       .then(res => res.json())
       .then(data => setLeaves(data))
       .catch(err => console.error('Error fetching leave data', err));
@@ -462,7 +464,7 @@ useEffect(() => {
                       <td>
                         {emp.contract_file ? (
                          <a
-  href={`https://unifiedops-backend.onrender.com/${emp.contract_file}`}
+  href={`/uploads/contracts/${emp.contract_file}`}
   target="_blank"
   rel="noreferrer"
   className="link"

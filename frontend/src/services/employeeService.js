@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = 'https://unifiedops-backend.onrender.com/api';
+const API_BASE = '/api';
 
 
 // Fetch all employees (basic + contract info)
@@ -26,7 +26,7 @@ export const fetchEmployeesWithTasks = async () => {
 };
 
 
-const BASE_URL = 'https://unifiedops-backend.onrender.com/api';
+const BASE_URL = '/api';
 
 
 export const fetchEmployeeById = (id) =>

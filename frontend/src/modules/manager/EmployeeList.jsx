@@ -47,7 +47,7 @@ const EmployeeList = () => {
                 <td style={styles.td}>
                   {emp.contract_file ? (
                     <a
-                      href={`http://localhost:5000/${emp.contract_file}`}
+                      href={`/uploads/contracts/${emp.contract_file}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={styles.link}

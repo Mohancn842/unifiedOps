@@ -7,9 +7,6 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-
-
-
 import { jwtDecode } from 'jwt-decode';
 import {
   FiLogOut, FiFolder, FiCheckSquare, FiUser,FiKey,
@@ -43,9 +40,7 @@ const [monthlyPresent, setMonthlyPresent] = useState(0);
 const [attendanceMarked, setAttendanceMarked] = useState(false);
 const workingDays = 20;
 
-
 //const [unreadCount, setUnreadCount] = useState(0);
-
 
 // Decode token// Decode employeeToken and extract employeeId
 const decodedToken = localStorage.getItem('employeeToken')
@@ -64,7 +59,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (activeView === 'notifications' && employeeId) {
-       axios.get(`https://unifiedops-backend.onrender.com/api/notifications/employee/${employeeId}`)
+       axios.get(`/api/notifications/employee/${employeeId}`)
       .then(res => setNotifications(res.data))
       .catch(err => console.error('Failed to load notifications:', err));
   }
@@ -73,7 +68,7 @@ useEffect(() => {
 useEffect(() => {
   if (activeView === 'team' && employeeId) {
     setTeamLoading(true);
-  axios.get(`https://unifiedops-backend.onrender.com/api/employees/team/${employeeId}`)
+  axios.get(`/api/employees/team/${employeeId}`)
       .then(res => setTeamMembers(res.data))
       .catch(err => console.error('❌ Team fetch error:', err))
       .finally(() => setTeamLoading(false));
@@ -82,7 +77,7 @@ useEffect(() => {
 // ✅ Fetch attendance once when activeView is "attendance"
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-   axios.get(`https://unifiedops-backend.onrender.com/api/attendance/${employeeId}/monthly`)
+   axios.get(`/api/attendance/${employeeId}/monthly`)
       .then((response) => {
         setMonthlyPresent(response.data.presentDays);
         setAttendanceMarked(response.data.todayMarked);
@@ -94,7 +89,7 @@ useEffect(() => {
 }, [activeView, employeeId]);
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-  axios.get(`https://unifiedops-backend.onrender.com/api/leaves/${employeeId}/history`)
+  axios.get(`/api/leaves/${employeeId}/history`)
       .then(res => setLeaveHistory(res.data))
       .catch(err => console.error('Failed to load leave history', err));
   }
@@ -108,7 +103,7 @@ const markAttendance = async () => {
   }
 
   try {
-    await axios.post('https://unifiedops-backend.onrender.com/api/attendance/mark', { employeeId });
+    await axios.post('/api/attendance/mark', { employeeId });
     setAttendanceMarked(true);
     setMonthlyPresent(prev => prev + 1);
     alert('✅ Attendance marked successfully!');
@@ -131,13 +126,10 @@ const markAttendance = async () => {
   }
 
   try {
-    await axios.post('https://unifiedops-backend.onrender.com/api/leaves/apply', {
-      employeeId,
-      date: leaveDate,
-      reason: leaveReason
-    });
+    await axios.post('/api/leaves/apply', { employeeId, date: leaveDate, reason: leaveReason })
 
-    const res = await axios.get(`https://unifiedops-backend.onrender.com/api/leaves/${employeeId}/history`);
+    const res = await await axios.get(`/api/leaves/${employeeId}/history`);
+
     setLeaveHistory(res.data);
 
     alert('Leave application submitted.');
@@ -163,7 +155,7 @@ const markAttendance = async () => {
     try {
       const employeeId = employeeIdRef.current;
       if (employeeId) {
-      await axios.post('https://unifiedops-backend.onrender.com/api/auth/logout', { employeeId });
+      await axios.post('/api/auth/logout', { employeeId })
       }
     } catch (err) {
       console.error('Logout failed:', err);
@@ -206,10 +198,11 @@ useEffect(() => {
       const decoded = jwtDecode(token);
       const employeeId = decoded.userId;
       employeeIdRef.current = employeeId;
-      axios.get(`https://unifiedops-backend.onrender.com/api/employees/${employeeId}`)
+      axios.get(`/api/employees/${employeeId}`)
+
         .then(res => {
           setEmployee(res.data);
-           return axios.get(`https://unifiedops-backend.onrender.com/api/sessions/${employeeId}`);
+           return axios.get(`/api/sessions/${employeeId}`);
 
         })
         .then(res => {
@@ -227,7 +220,7 @@ useEffect(() => {
   }, [logoutAndRedirect]);
   const id = employeeIdRef.current;
 if (id) {
-  axios.get(`https://unifiedops-backend.onrender.com/api/tasks/history/${id}`)
+  axios.get(`/api/tasks/history/${id}`)
     .then(res => {
       setTaskHistory(res.data);
     })
@@ -241,7 +234,7 @@ if (id) {
       if (employeeId) {
         const data = JSON.stringify({ employeeId });
         navigator.sendBeacon(
-          'https://unifiedops-backend.onrender.com/api/auth/logout',
+          '/api/auth/logout',
           new Blob([data], { type: 'application/json' })
         );
       }
@@ -679,7 +672,7 @@ const calculateProjectProgress = (projectName) => {
         {/* ✅ Mark all as read */}
         <button
           onClick={async () => {
-            await axios.patch(`https://unifiedops-backend.onrender.com/api/notifications/employee/${employeeId}/markAllAsRead`);
+            await axios.patch(`http://localhost:5000/api/notifications/employee/${employeeId}/markAllAsRead`);
             setNotifications(notifications.map(n => ({ ...n, isRead: true })));
           }}
           style={{
@@ -704,7 +697,7 @@ const calculateProjectProgress = (projectName) => {
             <div
               key={n._id}
               onClick={async () => {
-              await axios.patch(`https://unifiedops-backend.onrender.com/api/notifications/${n._id}/markAsRead`);
+              await axios.patch(`http://localhost:5000/api/notifications/${n._id}/markAsRead`);
                 setNotifications(prev =>
                   prev.map(item =>
                     item._id === n._id ? { ...item, isRead: true } : item
@@ -792,7 +785,7 @@ case 'info':
         {employee.contract_file ? (
           <div style={{ marginTop: '10px' }}>
             <b>Offer Letter:</b>{' '}
-           <a href={`https://unifiedops-backend.onrender.com/${employee.contract_file}`} target="_blank" rel="noopener noreferrer">
+           <a href={`http://localhost:5000/${employee.contract_file}`} target="_blank" rel="noopener noreferrer">
 
               <button
                 style={{
