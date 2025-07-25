@@ -43,7 +43,7 @@ const marketingTeamRoutes = require('./routes/marketingTeams');
 const authRoutes1 = require('./routes/authRoute1');
 const ticketRoutes = require('./routes/ticketRoutes');
 const supportEmployeeRoutes = require('./routes/support-employees');
-
+const teamRoutes = require('./routes/teamRoutes');
 const salesEmployeeRoutes = require('./routes/salesemployeeRoutes');
 const payrollLoginRoutes = require("./routes/payrollLoginRoutes");
 
@@ -71,6 +71,7 @@ app.use('/api/support-employees', supportEmployeeRoutes);
 app.use("/api/payroll", payrollLoginRoutes);
 app.use('/api/account-projects', require('./routes/accountProject'));
 app.use('/api/invoices', require('./routes/invoice'));
+app.use('/api/teams', teamRoutes); 
 
 // ✅ Root test route
 app.get('/', (req, res) => {
