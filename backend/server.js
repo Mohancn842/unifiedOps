@@ -3,16 +3,23 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
-
+const allowedOrigins = ['https://managenest-frontend.onrender.com'];
 const app = express();
 
 // ✅ Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // if you're using cookies/auth headers
 }));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // ✅ Serve static files
 app.use('/uploads/contracts', express.static(path.join(__dirname, 'uploads/contracts')));
