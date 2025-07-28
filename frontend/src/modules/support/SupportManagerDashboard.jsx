@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 function SupportManagerDashboard() {
   const [activeTab, setActiveTab] = useState('tickets');
   const [tickets, setTickets] = useState([]);
   const [supportEmployees, setSupportEmployees] = useState([]);
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   const navigate = useNavigate();
 
