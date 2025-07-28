@@ -1,12 +1,10 @@
 // src/services/employeeApi.js
-import axios from 'axios';
+import API from './api';
 
-const API = axios.create({
-  baseURL: '/api',
-});
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 export const employeeLogin = async (email, password) => {
-  const response = await API.post('/auth/login', {
+  const response = await API.post(`${baseURL}/auth/login`, {
     email,
     password,
     role: 'employee' // ✅ REQUIRED

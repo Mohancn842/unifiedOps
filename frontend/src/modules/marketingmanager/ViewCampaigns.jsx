@@ -4,6 +4,8 @@ import axios from 'axios';
 function ViewCampaigns() {
   const [campaigns, setCampaigns] = useState([]);
   const [editId, setEditId] = useState(null);
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
+
   const [form, setForm] = useState({
     name: '',
     date: '',
@@ -23,13 +25,13 @@ function ViewCampaigns() {
   }, []);
 
   const fetchCampaigns = () => {
-    axios.get('http://localhost:5000/api/campaigns')
+    axios.get(`${baseURL}/api/campaigns`)
       .then(res => setCampaigns(res.data))
       .catch(err => console.error('Error fetching campaigns:', err));
   };
 
   const fetchTeams = () => {
-    axios.get('http://localhost:5000/api/marketing-teams')
+    axios.get(`${baseURL}/api/marketing-teams`)
       .then(res => setTeams(res.data))
       .catch(err => console.error('Error fetching teams:', err));
   };
@@ -56,7 +58,7 @@ function ViewCampaigns() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/campaigns/${editId}`, form);
+      await axios.put(`${baseURL}/api/campaigns/${editId}`, form);
       alert('Campaign updated');
       setEditId(null);
       fetchCampaigns();

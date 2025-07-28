@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchAllEmployeesWithProjects } from '../../services/employeeService';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
 
@@ -47,7 +47,7 @@ const EmployeeList = () => {
                 <td style={styles.td}>
                   {emp.contract_file ? (
                     <a
-                      href={`/uploads/contracts/${emp.contract_file}`}
+                      href={`${baseURL}/uploads/contracts/${emp.contract_file}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={styles.link}

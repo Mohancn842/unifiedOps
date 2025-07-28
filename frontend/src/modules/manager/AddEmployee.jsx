@@ -18,6 +18,7 @@ const AddEmployee = () => {
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -166,7 +167,7 @@ const AddEmployee = () => {
       }
       data.append('contract_file', pdfFile); // Auto-generated contract
 
-      const response = await axios.post('/api/employees', data);
+      const response = await axios.post('${baseURL}/api/employees', data);
       setMessage({ type: 'success', text: response.data.message });
 
       setFormData({
@@ -175,7 +176,7 @@ const AddEmployee = () => {
       });
 
       setTimeout(() => {
-        navigate('/hr/dashboard');
+        navigate('${baseURL}/hr/dashboard');
       }, 2000);
 
     } catch (err) {

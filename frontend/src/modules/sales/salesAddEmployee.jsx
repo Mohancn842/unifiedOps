@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const AddEmployee = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const AddEmployee = () => {
         ...formData,
         joinDate: new Date(formData.joinDate).toISOString()
       };
-      await axios.post('http://localhost:5000/api/sales/employees/add', payload);
+      await axios.post(`${baseURL}/api/sales/employees/add`, payload);
       alert('✅ Employee added successfully!');
       navigate('/salesmanager/dashboard/');
     } catch (err) {

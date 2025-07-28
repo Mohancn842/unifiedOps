@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const SupportEmployeeDashboard = () => {
   const [employee, setEmployee] = useState(null);
@@ -13,7 +14,7 @@ const SupportEmployeeDashboard = () => {
 
   const fetchEmployeeData = useCallback(async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/support-employees/${employeeId}`, {
+      const res = await axios.get(`${baseURL}/api/support-employees/${employeeId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEmployee(res.data.employee);
@@ -31,7 +32,7 @@ const SupportEmployeeDashboard = () => {
 
   const handleStatusChange = async (ticketId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/tickets/status/${ticketId}`, {
+      await axios.put(`${baseURL}/api/tickets/status/${ticketId}`, {
         status: newStatus,
       });
       alert('✅ Status updated');

@@ -8,13 +8,14 @@ function CreateTeam() {
   const [teamLeadId, setTeamLeadId] = useState('');
   const [teams, setTeams] = useState([]);
   const [editingTeamId, setEditingTeamId] = useState(null);
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [empRes, teamRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/marketing-employees'),
-          axios.get('http://localhost:5000/api/marketing-teams'),
+          axios.get('${baseURL}/api/marketing-employees'),
+          axios.get('${baseURL}/api/marketing-teams'),
         ]);
         setEmployees(empRes.data);
         setTeams(teamRes.data);
@@ -55,14 +56,14 @@ function CreateTeam() {
 
     try {
       if (editingTeamId) {
-        await axios.put(`http://localhost:5000/api/marketing-teams/${editingTeamId}`, {
+        await axios.put(`${baseURL}/api/marketing-teams/${editingTeamId}`, {
           name: teamName,
           memberIds: selectedMembers,
           teamLeadId,
         });
         alert('Team updated successfully!');
       } else {
-        await axios.post('http://localhost:5000/api/marketing-teams', {
+        await axios.post(`${baseURL}/api/marketing-teams`, {
           name: teamName,
           memberIds: selectedMembers,
           teamLeadId,
@@ -75,7 +76,7 @@ function CreateTeam() {
       setTeamLeadId('');
       setEditingTeamId(null);
 
-      const updatedTeams = await axios.get('http://localhost:5000/api/marketing-teams');
+      const updatedTeams = await axios.get(`${baseURL}/api/marketing-teams`);
       setTeams(updatedTeams.data);
     } catch (error) {
       console.error('Error submitting team:', error);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { assignTask, fetchTasks, updateTaskStatus } from '../../services/taskService';
 import axios from 'axios';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const TaskManager = () => {
   const [form, setForm] = useState({
@@ -23,8 +24,8 @@ const TaskManager = () => {
   const loadAll = async () => {
     const [taskData, projectData, employeeData] = await Promise.all([
       fetchTasks(),
-      axios.get('/api/projects'),
-  axios.get('/api/employees/full-details')
+      axios.get('${baseURL}/api/projects'),
+  axios.get('${baseURL}/api/employees/full-details')
 
     ]);
     setTasks(taskData);

@@ -20,7 +20,7 @@ const HRLogin = () => {
       const { token } = await hrLogin(email, password);
       localStorage.setItem('hrToken', token);
       alert('✅ HR login successful');
-      navigate('/hr/dashboard', { replace: true });
+      navigate(' ${baseURL}/hr/dashboard', { replace: true });
     } catch (err) {
       alert('❌ Invalid HR credentials');
     }

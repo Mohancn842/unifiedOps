@@ -1,16 +1,16 @@
 import axios from 'axios';
-const API = '/api/tasks';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+const API = `${baseURL}/api/tasks`;
 
 export const assignTask = async (taskData) => {
-  return await axios.post(`${API}/assign`, taskData); // ✅ Fix here
+  return await axios.post(`${baseURL}/assign`, taskData); // ✅ Fix here
 };
 
 export const fetchTasks = async () => {
-  const res = await axios.get(API);
+  const res = await axios.get(`${baseURL}/tasks`);
   return res.data;
 };
 
 export const updateTaskStatus = async (taskId, status) => {
-  return await axios.patch(`${API}/${taskId}/status`, { status });
+  return await axios.patch(`${baseURL}/${taskId}/status`, { status });
 };

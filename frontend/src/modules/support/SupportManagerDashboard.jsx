@@ -6,6 +6,8 @@ function SupportManagerDashboard() {
   const [activeTab, setActiveTab] = useState('tickets');
   const [tickets, setTickets] = useState([]);
   const [supportEmployees, setSupportEmployees] = useState([]);
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,7 +17,7 @@ function SupportManagerDashboard() {
 
   const fetchTickets = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/tickets');
+      const res = await axios.get(`${baseURL}/api/tickets`);
       setTickets(res.data);
     } catch (err) {
       console.error('Error fetching tickets:', err);
@@ -24,7 +26,7 @@ function SupportManagerDashboard() {
 
   const fetchSupportEmployees = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/support-employees');
+      const res = await axios.get(`${baseURL}/api/support-employees`);
       setSupportEmployees(res.data);
     } catch (err) {
       console.error('Error fetching employees:', err);
@@ -33,7 +35,7 @@ function SupportManagerDashboard() {
 
   const handleAssign = async (ticketId, employeeId) => {
   try {
-    const response = await axios.put(`http://localhost:5000/api/tickets/assign/${ticketId}`, {
+    const response = await axios.put(`${baseURL}/api/tickets/assign/${ticketId}`, {
       assignedTo: employeeId,
     });
 
@@ -208,7 +210,7 @@ function CreateEmployeeForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/support-employees/create', form);
+      await axios.post(`${baseURL}/api/support-employees/create`, form);
       alert('✅ Support Employee Created');
       setForm({ name: '', email: '', password: '', department: '', designation: '', salary: '' });
     } catch (err) {

@@ -6,12 +6,13 @@ const EmployeeDashboard = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [employee, setEmployee] = useState(null);
   const navigate = useNavigate();
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   // Fetch campaigns
   const fetchCampaigns = async () => {
   try {
     const employeeId = localStorage.getItem('employeeId');
-    const res = await axios.get(`http://localhost:5000/api/campaigns/team/${employeeId}`);
+    const res = await axios.get(`${baseURL}/api/campaigns/team/${employeeId}`);
     setCampaigns(res.data);
   } catch (err) {
     console.error('Error fetching campaigns:', err);
@@ -54,7 +55,7 @@ const EmployeeDashboard = () => {
         <h3 style={sidebarTitle}>👩‍💼 {employee?.name || 'Employee'}</h3>
         <button style={navBtn}>🏠 Dashboard</button>
         <button style={navBtn} onClick={() => navigate('/create-campaign')}>📢 Campaigns</button>
-        <button style={navBtn} onClick={() => navigate('/rise-tickets')}>Rise Tickets</button>
+        <button style={navBtn} onClick={() => navigate('/rise-tickets')}>🎫Rise Tickets</button>
         <button style={navBtn} onClick={handleLogout}>🚪 Logout</button>
       </div>
 

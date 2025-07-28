@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_BASE = '/api';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 
 // Fetch all employees (basic + contract info)

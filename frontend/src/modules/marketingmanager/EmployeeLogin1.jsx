@@ -7,6 +7,7 @@ const EmployeeLogin = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const handlePopState = () => {
@@ -19,7 +20,7 @@ const EmployeeLogin = () => {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/login', {
+      const res = await axios.post(`${baseURL}/api/login`, {
         email,
         password
       });

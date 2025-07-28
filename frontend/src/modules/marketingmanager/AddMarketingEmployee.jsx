@@ -10,6 +10,7 @@ function AddMarketingEmployee() {
     designation: '',
     salary: '',
   });
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   const handleAddEmployee = async () => {
     const { name, email, password, department, designation, salary } = form;
@@ -19,7 +20,7 @@ function AddMarketingEmployee() {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/marketing-employees', {
+      await axios.post('${baseURL}api/marketing-employees', {
         name,
         email,
         password,

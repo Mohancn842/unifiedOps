@@ -1,10 +1,7 @@
 // src/services/managerApi.js
 
-import axios from 'axios';
-
-const API = axios.create({
-baseURL: '/api',
-});
+import API from './api';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
@@ -14,7 +11,7 @@ API.interceptors.request.use((config) => {
 
 // Manager login function
 export const managerLogin = async (email, password) => {
-  const response = await API.post('/auth/login', {
+  const response = await API.post(`${baseURL}/auth/login`, {
     email,
     password,
     role: 'manager',

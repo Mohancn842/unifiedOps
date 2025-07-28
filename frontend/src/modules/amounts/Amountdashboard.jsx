@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+//import Amountdashboard from './modules/amounts/Amountdashboard';
+const BACKEND = process.env.REACT_APP_API_BASE_URL;
 
-const BACKEND = 'http://localhost:5000';
 
 export default function AccountInvoiceDashboard() {
   const [projects, setProjects] = useState([]);
@@ -34,10 +35,25 @@ export default function AccountInvoiceDashboard() {
   };
 
   const handleAddProject = async () => {
-    await axios.post(`${BACKEND}/api/account-projects`, form);
-    setForm({ projectName: '', startDate: '', endDate: '', estimatedAmount: '', spentAmount: '', description: '' });
-    fetchData();
+    const { projectName, startDate, endDate, estimatedAmount, spentAmount, description } = form;
+
+    // Simple Validation
+    if (!projectName || !startDate || !endDate || !estimatedAmount || !spentAmount || !description) {
+      alert("❗ Please fill in all fields before submitting.");
+      return;
+    }
+
+    try {
+      await axios.post(`${BACKEND}/api/account-projects`, form);
+      setForm({ projectName: '', startDate: '', endDate: '', estimatedAmount: '', spentAmount: '', description: '' });
+      fetchData();
+    } catch (error) {
+      alert("❌ Failed to add project. Please try again.");
+      console.error(error);
+    }
   };
+
+
 
   const generateInvoicePDF = (invoiceData) => {
   const doc = new jsPDF();

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const SalesEmployeeDashboard = () => {
   const [employee, setEmployee] = useState(null);
@@ -13,7 +14,7 @@ const SalesEmployeeDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/sales/employees/getByEmail/${email}`);
+        const res = await axios.get(`${baseURL}/api/sales/employees/getByEmail/${email}`);
         setEmployee(res.data);
       } catch (err) {
         console.error('❌ Failed to load employee data', err);
@@ -25,7 +26,7 @@ const SalesEmployeeDashboard = () => {
 
   const handleUpdate = async () => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/sales/employees/updateTarget/${email}`, {
+      const res = await axios.put(`${baseURL}/api/sales/employees/updateTarget/${email}`, {
         completedTarget: Number(newCompleted),
       });
       setEmployee(res.data);

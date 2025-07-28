@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const SalesManager = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const SalesManager = () => {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/sales/employees');
+      const res = await axios.get(`${baseURL}/api/sales/employees`);
       setEmployees(res.data);
     } catch (err) {
       console.error('Failed to fetch employees:', err);

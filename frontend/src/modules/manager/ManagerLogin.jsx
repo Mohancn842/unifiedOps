@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { managerLogin } from '../../services/managerApi';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const ManagerLogin = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ const ManagerLogin = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/manager/dashboard', { replace: true });
+      navigate('${baseURL}/manager/dashboard', { replace: true });
     }
 
     // On browser back button, navigate to home page
@@ -30,7 +31,7 @@ const ManagerLogin = () => {
       const { token } = await managerLogin(email, password);
       localStorage.setItem('token', token);
       alert('✅ Login successful');
-      navigate('/manager/dashboard', { replace: true });
+      navigate('${baseURL}/manager/dashboard', { replace: true });
     } catch (err) {
       alert('❌ Invalid credentials');
     }

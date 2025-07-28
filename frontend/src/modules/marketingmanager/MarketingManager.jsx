@@ -6,14 +6,15 @@ function MarketingManager() {
   const [teams, setTeams] = useState([]);
   const [campaignStats, setCampaignStats] = useState({ total: 0, active: 0 });
   const [monthlyCounts, setMonthlyCounts] = useState(Array(12).fill(0));
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     const fetchAll = async () => {
       try {
         const [empRes, teamRes, campaignRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/marketing-employees'),
-          axios.get('http://localhost:5000/api/marketing-teams'),
-          axios.get('http://localhost:5000/api/campaigns'),
+          axios.get(`${baseURL}/api/marketing-employees`),
+          axios.get(`${baseURL}/api/marketing-teams`),
+          axios.get(`${baseURL}/api/campaigns`),
         ]);
 
         setEmployees(empRes.data);

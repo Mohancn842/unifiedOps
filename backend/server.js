@@ -7,7 +7,11 @@ require('dotenv').config();
 const app = express();
 
 // ✅ Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+}));
+
 app.use(express.json());
 
 // ✅ Serve static files
@@ -24,6 +28,7 @@ require('./models/SalaryPayment');
 require('./models/Notification');
 require('./models/SupportEmployee'); // ✅ register before using populate
 require('./models/Ticket');          // ✅ ensure Ticket model is known to mongoose
+require('./models/AccountProject');
 
 // ✅ Import routes
 const jobRouter = require('./routes/jobRouter');
