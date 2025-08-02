@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-//import Amountdashboard from './modules/amounts/Amountdashboard';
 const BACKEND = process.env.REACT_APP_API_BASE_URL;
 
 

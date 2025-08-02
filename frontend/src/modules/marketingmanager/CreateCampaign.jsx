@@ -18,10 +18,10 @@ function CreateCampaign() {
   const [teams, setTeams] = useState([]);
 
   useEffect(() => {
-    axios.get('${baseURL}api/marketing-teams')
+    axios.get(`${baseURL}api/marketing-teams`)
       .then((res) => setTeams(res.data))
       .catch((err) => console.error('Error fetching teams:', err));
-  }, []);
+  }, [baseURL]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +37,7 @@ function CreateCampaign() {
 
     try {
       const payload = { ...form };
-      await axios.post('${baseURL}api/campaigns', payload);
+      await axios.post(`${baseURL}/api/campaigns`, payload);
       alert('Campaign created successfully');
       setForm({
         title: '',

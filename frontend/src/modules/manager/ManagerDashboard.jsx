@@ -37,7 +37,7 @@ const ManagerDashboard = () => {
   const logout = useCallback(() => {
     localStorage.removeItem('token');
     sessionStorage.setItem('loggedOut', 'true');
-    navigate('${baseURL}/manager/login', { replace: true });
+    navigate(`${baseURL}/manager/login`, { replace: true });
   }, [navigate]);
 
   // State
@@ -62,7 +62,7 @@ const [sessionStartDate, setSessionStartDate] = useState('');
 const [sessionEndDate, setSessionEndDate] = useState('');
 
 useEffect(() => {
- axios.get('${baseURL}/api/sessions')
+ axios.get(`${baseURL}/api/sessions`)
     .then((res) => {
       console.log("Fetched sessions:", res.data);
       setSessions(res.data);
@@ -152,7 +152,7 @@ const exportExcel = (rows, columns, fileName) => {
     const loggedOut = sessionStorage.getItem('loggedOut');
     if (!token || loggedOut === 'true') {
       sessionStorage.removeItem('loggedOut');
-      navigate('${baseURL}/manager/login', { replace: true });
+      navigate(`${baseURL}/manager/login`, { replace: true });
       return;
     }
     // ================= Export Helpers =================
@@ -170,7 +170,7 @@ const exportExcel = (rows, columns, fileName) => {
       try {
         const empData = await fetchAllEmployeesWithProjects();
         const taskData = await fetchEmployeesWithTasks();
-        const projData = await axios.get('${baseURL}/api/projects');
+        const projData = await axios.get(`${baseURL}/api/projects`);
         const taskList = await fetchTasks();
         setEmployees(empData);
         setEmployeesWithTasks(taskData);
@@ -207,7 +207,7 @@ const handleAddToProject = async (projectId, employeeId) => {
     // 🔄 Refresh project & employee data after update
     const [empData, projData] = await Promise.all([
       fetchAllEmployeesWithProjects(),
-     axios.get('${baseURL}/api/projects'),
+     axios.get(`${baseURL}/api/projects`),
     ]);
     setEmployees(empData);
     setProjects(projData.data);
@@ -225,7 +225,7 @@ const handleAddToProject = async (projectId, employeeId) => {
 
     // ✅ Step 1: Fetch employees with tasks
     const { data: employeesWithTasks } = await axios.get(
-     '${baseURL}/api/employees/with-tasks'
+     `${baseURL}/api/employees/with-tasks`
     );
 
     console.log("🚀 All employees with tasks:", employeesWithTasks);
@@ -329,9 +329,9 @@ const handleAddToProject = async (projectId, employeeId) => {
           <div className="header-left">
             <h1>Manager Dashboard</h1>
             <div className="quick-actions">
-              <button onClick={() => navigate('${baseURL}/manager/add-employee')}>➕ Add Employee</button>
-              <button onClick={() => navigate('${baseURL}/manager/addproject')}>➕ Add Project</button>
-              <button onClick={() => navigate('${baseURL}/manager/task')}>📝 Assign Task</button>
+              <button onClick={() => navigate(`${baseURL}/manager/add-employee`)}>➕ Add Employee</button>
+              <button onClick={() => navigate(`${baseURL}/manager/addproject`)}>➕ Add Project</button>
+              <button onClick={() => navigate(`${baseURL}/manager/task`)}>📝 Assign Task</button>
             </div>
           </div>
           <div className="header-right">

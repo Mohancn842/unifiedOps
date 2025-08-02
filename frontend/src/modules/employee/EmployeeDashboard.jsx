@@ -147,9 +147,6 @@ const markAttendance = async () => {
   }
 };
 
-
- 
-
  
   const logoutAndRedirect = useCallback(async () => {
     try {
@@ -161,7 +158,7 @@ const markAttendance = async () => {
       console.error('Logout failed:', err);
     } finally {
       localStorage.removeItem('employeeToken');
-      navigate('${process.env.REACT_APP_API_BASE_URL}/employee/login', { replace: true });
+      navigate(`${process.env.REACT_APP_API_BASE_URL}/employee/login`, { replace: true });
     }
   }, [navigate]);
 useEffect(() => {
@@ -234,7 +231,7 @@ if (id) {
       if (employeeId) {
         const data = JSON.stringify({ employeeId });
         navigator.sendBeacon(
-          '${process.env.REACT_APP_API_BASE_URL}/api/auth/logout',
+          `${process.env.REACT_APP_API_BASE_URL}/api/auth/logout`,
           new Blob([data], { type: 'application/json' })
         );
       }
@@ -672,7 +669,7 @@ const calculateProjectProgress = (projectName) => {
         {/* ✅ Mark all as read */}
         <button
           onClick={async () => {
-            await axios.patch(`http://localhost:5000/api/notifications/employee/${employeeId}/markAllAsRead`);
+            await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/api/notifications/employee/${employeeId}/markAllAsRead`);
             setNotifications(notifications.map(n => ({ ...n, isRead: true })));
           }}
           style={{
@@ -1095,11 +1092,8 @@ case 'info':
     </div>
   );
 
-
-
     case 'taskHistory': {
  
-
   const filteredTasks = taskHistory.filter(task => {
     return (
       (!statusFilter || task.status === statusFilter) &&
@@ -1310,10 +1304,6 @@ case 'info':
   Reset Password
   
 </button>
-
-
-
-
 
         <button className="logout-btn" onClick={logoutAndRedirect}><FiLogOut /> Logout</button>
       </aside>

@@ -20,7 +20,7 @@ function AddMarketingEmployee() {
     }
 
     try {
-      await axios.post('${baseURL}api/marketing-employees', {
+      await axios.post(`${baseURL}/api/marketing-employees`, {
         name,
         email,
         password,

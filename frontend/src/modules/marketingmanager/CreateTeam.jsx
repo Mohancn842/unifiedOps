@@ -14,8 +14,8 @@ function CreateTeam() {
     const fetchData = async () => {
       try {
         const [empRes, teamRes] = await Promise.all([
-          axios.get('${baseURL}/api/marketing-employees'),
-          axios.get('${baseURL}/api/marketing-teams'),
+          axios.get(`${baseURL}/api/marketing-employees`),
+          axios.get(`${baseURL}/api/marketing-teams`),
         ]);
         setEmployees(empRes.data);
         setTeams(teamRes.data);
@@ -24,7 +24,7 @@ function CreateTeam() {
       }
     };
     fetchData();
-  }, []);
+  }, [baseURL]);
 
   const isMemberInAnotherTeam = (memberId) => {
     return teams.some(team =>

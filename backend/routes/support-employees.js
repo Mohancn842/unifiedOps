@@ -97,24 +97,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// ✅ Get a support employee by ID with assigned tickets
-router.get('/:id', async (req, res) => {
-  try {
-    const employee = await SupportEmployee.findById(req.params.id).select('-passwordHash');
-    if (!employee) {
-      return res.status(404).json({ error: 'Support employee not found' });
-    }
 
-    const Ticket = require('../models/Ticket');
-    const assignedTickets = await Ticket.find({ assignedTo: req.params.id })
-      .populate('raisedBy', 'name email');
-
-    res.json({ employee, assignedTickets });
-  } catch (err) {
-    console.error('❌ Error fetching employee profile:', err);
-    res.status(500).json({ error: 'Server error fetching employee profile' });
-  }
-});
 // ✅ GET a support employee by ID along with assigned tickets
 router.get('/:id', async (req, res) => {
   try {

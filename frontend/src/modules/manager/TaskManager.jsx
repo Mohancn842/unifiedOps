@@ -24,8 +24,8 @@ const TaskManager = () => {
   const loadAll = async () => {
     const [taskData, projectData, employeeData] = await Promise.all([
       fetchTasks(),
-      axios.get('${baseURL}/api/projects'),
-  axios.get('${baseURL}/api/employees/full-details')
+      axios.get(`${baseURL}/api/projects`),
+      axios.get(`${baseURL}/api/employees/full-details`)
 
     ]);
     setTasks(taskData);

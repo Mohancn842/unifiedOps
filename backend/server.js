@@ -3,11 +3,17 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
-const allowedOrigins = ['https://managenest-frontend.onrender.com'];
+
 const app = express();
 
-// ✅ Middleware
-app.use(cors({
+// ✅ Define allowed origins first
+const allowedOrigins = [
+  'https://managenest-frontend.onrender.com',
+  'http://localhost:3000'
+];
+
+// ✅ Define corsOptions before using it
+const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -15,9 +21,15 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true, // if you're using cookies/auth headers
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+};
 
+// ✅ Use CORS middleware
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // handles preflight requests
+
+// Continue with other middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -33,8 +45,8 @@ require('./models/Attendance');
 require('./models/Leave');
 require('./models/SalaryPayment');
 require('./models/Notification');
-require('./models/SupportEmployee'); // ✅ register before using populate
-require('./models/Ticket');          // ✅ ensure Ticket model is known to mongoose
+require('./models/SupportEmployee'); 
+require('./models/Ticket');          
 require('./models/AccountProject');
 
 // ✅ Import routes

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { hrLogin } from '../../services/hrApi'; // Make sure this file exists
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const HRLogin = () => {
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ const HRLogin = () => {
       const { token } = await hrLogin(email, password);
       localStorage.setItem('hrToken', token);
       alert('✅ HR login successful');
-      navigate(' ${baseURL}/hr/dashboard', { replace: true });
+      navigate(`${baseURL}/hr/dashboard`, { replace: true });
     } catch (err) {
       alert('❌ Invalid HR credentials');
     }

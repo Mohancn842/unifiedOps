@@ -18,7 +18,7 @@ import {
   CartesianGrid
 } from 'recharts';
 
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const HRDashboard = () => {
   const [activeTab, setActiveTab] = useState('employees');
   const [searchText, setSearchText] = useState('');
@@ -28,7 +28,6 @@ const HRDashboard = () => {
 
   const performanceRef = useRef(null);
   const [highlighted, setHighlighted] = useState(false);
-  // at the top of HRDashboard.jsx
 const [allEmployees, setAllEmployees] = useState([]);
 const [paidEmployees, setPaidEmployees] = useState([]);
 const [selectedEmployees, setSelectedEmployees] = useState([]);
@@ -58,7 +57,6 @@ const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
 
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
-// eslint-disable-next-line react-hooks/exhaustive-deps
 useEffect(() => {
   if (performanceStats?.monthly) {
     const formatted = Object.entries(performanceStats.monthly).map(([month, count]) => ({
@@ -72,8 +70,6 @@ useEffect(() => {
 }, [performanceStats]);
 
 
-
-
   const handleViewPerformance = (empId) => {
     setSelectedEmployeeId(empId);
     setTimeout(() => {
@@ -85,8 +81,6 @@ useEffect(() => {
     }, 150);
   };
 
-
-  
 
 useEffect(() => {
   console.log('Selected Employee ID:', selectedEmployeeId); // ⬅️ TEMP LOG
@@ -111,7 +105,7 @@ useEffect(() => {
 const handleViewPayrollHistory = async () => {
   if (!showHistory) {
     try {
-     const res = await axios.get('${process.env.REACT_APP_API_BASE_URL}/api/payroll/history');
+     const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/payroll/history`);
       setPayrollHistory(res.data);
     } catch (err) {
       console.error('Error fetching payroll history:', err);
@@ -123,10 +117,10 @@ const handleViewPayrollHistory = async () => {
 
 useEffect(() => {
   if (activeTab === 'payroll') {
-   fetch('/api/employees')
+   fetch(`${baseURL}/api/employees`)
       .then(res => res.json())
       .then(data => setAllEmployees(data));
-   fetch(`/api/payroll/paid/${currentMonth}`)
+   fetch(`${baseURL}/api/payroll/paid/${currentMonth}`)
       .then(res => res.json())
       .then(data => setPaidEmployees(data.map(p => p.employee._id))); // only IDs
   }
@@ -155,12 +149,12 @@ const handlePaySelected = async () => {
   try {
     setIsLoading(true);
 
-    await axios.post('/api/payroll/pay', {
+    await axios.post(`${baseURL}/api/payroll/pay`, {
       employeeIds: selectedEmployees,
       month: currentMonth,
     });
 
-    const { data } = await axios.get(`/api/payroll/paid/${currentMonth}`);
+    const { data } = await axios.get(`${baseURL}/api/payroll/paid/${currentMonth}`);
     setPaidEmployees(data.map(p => p.employee._id)); // ensure only IDs
 
     setSelectedEmployees([]);
@@ -176,7 +170,7 @@ const handlePaySelected = async () => {
 const fetchJobs = async () => {
   try {
     console.log('🔄 Fetching jobs...');
-    const res = await fetch('/api/jobs');
+    const res = await fetch(`${baseURL}/api/jobs`);
 
     const data = await res.json();
     console.log('📦 Jobs fetched from backend:', data); // ✅ Confirm what was received
@@ -204,7 +198,7 @@ const handleInputChange = (e) => {
 const handleAddJob = async (e) => {
   e.preventDefault();
   try {
-  await axios.post('/api/jobs/add', newJob);
+  await axios.post(`${baseURL}/api/jobs/add`, newJob);
 
     setNewJob({
       title: '',
@@ -243,7 +237,7 @@ useEffect(() => {
 const handleLeaveAction = (leaveId, status) => {
   const backendAction = status === 'Approved' ? 'approve' : 'reject';
 
-  fetch(`/api/leaves/${leaveId}/${backendAction}`, {
+  fetch(`${baseURL}/api/leaves/${leaveId}/${backendAction}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -261,14 +255,14 @@ const handleLeaveAction = (leaveId, status) => {
 useEffect(() => {
   if (activeTab === 'leaves') {
     // Fetch leave requests
-   fetch('/api/leaves/all')
+   fetch(`${baseURL}/api/leaves/all`)
       .then(res => res.json())
       .then(data => setLeaves(data))
       .catch(err => console.error('Error fetching leave data', err));
 
     // Fetch attendance records
     const query = attendanceDate ? `?date=${attendanceDate}` : '';
-    fetch(`/api/attendance/all${query}`)
+    fetch(`${baseURL}/api/attendance/all${query}`)
 
       .then(res => res.json())
       .then(data => {
@@ -280,15 +274,15 @@ useEffect(() => {
       })
       .catch(err => console.error('Error fetching attendance records', err));
   }
-}, [activeTab, attendanceDate]);
+}, [activeTab, attendanceDate,baseURL]);
 
 
   useEffect(() => {
-   fetch('/api/employees')
+   fetch(`${baseURL}/api/employees`)
       .then(res => res.json())
       .then(data => setEmployees(data))
       .catch(err => console.error('Error fetching employees', err));
-  }, []);
+  }, [baseURL]);
 
   const handleLogout = () => {
     localStorage.removeItem('hrToken');
@@ -298,12 +292,12 @@ useEffect(() => {
 
 useEffect(() => {
   if (activeTab === 'leaves') {
-    fetch('/api/leaves/all')
+    fetch(`${baseURL}/api/leaves/all`)
       .then(res => res.json())
       .then(data => setLeaves(data))
       .catch(err => console.error('Error fetching leave data', err));
   }
-}, [activeTab]);
+}, [activeTab,baseURL]);
 
 
   const uniqueDepartments = [...new Set(employees.map(emp => emp.department))];
@@ -409,7 +403,7 @@ useEffect(() => {
                     <option key={i} value={dept}>{dept}</option>
                   ))}
                 </select>
-                <button className="add-btn" onClick={() => navigate('/manager/add-employee')}>
+                <button className="add-btn" onClick={() => navigate(`${baseURL}/manager/add-employee`)}>
                   Add Employee
                 </button>
               </div>
@@ -464,7 +458,7 @@ useEffect(() => {
                       <td>
                         {emp.contract_file ? (
                          <a
-  href={`/uploads/contracts/${emp.contract_file}`}
+  href={`${baseURL}/uploads/contracts/${emp.contract_file}`}
   target="_blank"
   rel="noreferrer"
   className="link"
@@ -679,7 +673,7 @@ useEffect(() => {
     <th>Department</th>
     <th>Salary</th>
     <th>Status</th>
-    <th>Actions</th> {/* ✅ NEW */}
+    <th>Actions</th> 
   </tr>
 </thead>
 

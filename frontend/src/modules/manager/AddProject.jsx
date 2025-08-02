@@ -14,11 +14,11 @@ const AddProject = () => {
 
   useEffect(() => {
     fetchProjects();
-  }, []);
+  }, [fetchProjects]);
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get('${baseURL}/api/projects');
+      const res = await axios.get(`${baseURL}/api/projects`);
       setProjects(res.data);
     } catch (err) {
       console.error('Failed to fetch projects:', err);
@@ -33,7 +33,7 @@ const AddProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     await axios.post('${baseURL}/api/projects', form);
+     await axios.post(`${baseURL}/api/projects`, form);
       alert('✅ Project added successfully!');
       setForm({ name: '', description: '', start_date: '', end_date: '', status: 'Planned' });
       fetchProjects(); // Refresh list
