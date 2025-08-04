@@ -176,7 +176,7 @@ const AddEmployee = () => {
       });
 
       setTimeout(() => {
-        navigate(`${baseURL}/hr/dashboard`);
+        navigate('/hr/dashboard');
       }, 2000);
 
     } catch (err) {

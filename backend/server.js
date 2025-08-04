@@ -16,7 +16,7 @@ app.use(cors({
   origin: ['http://localhost:3000', 'https://managenest-frontend.onrender.com'],
   credentials: true,
 }));
-
+app.options('*', cors());
 
 // Continue with other middlewares
 app.use(express.json());
@@ -74,7 +74,7 @@ app.use('/api/leaves', leaveRoutes);
 app.use('/api/payroll', payrollRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/marketing-teams', marketingTeamRoutes);
-app.use('/api/sales-employees', salesEmployeeRoutes);
+app.use('/api/sales/employees', salesEmployeeRoutes);
 app.use('/api/marketing-employees', marketingEmployeeRoutes);
 app.use('/api/campaigns', campaignRoutes);
 app.use('/api', authRoutes1);

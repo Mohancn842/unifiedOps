@@ -39,7 +39,6 @@ import AddSalesEmployee from './modules/sales/salesAddEmployee';
 import SalesEmployeeLogin from './modules/sales/salesEmployeeLogin';
 import SalesEmployeeDashboard from './modules/sales/SalesEmployeeDashboard';
 import Amountlogin from './modules/amounts/Amountlogin'
-import Amountdashboard from './modules/amounts/Amountdashboard';
 
 function App() {
   return (

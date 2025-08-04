@@ -5,6 +5,9 @@ const SalesUser = require('../models/User');
 
 console.log('✅ SalesEmployee routes loaded');
 
+router.get('/', (req, res) => {
+  res.send('Sales Employee API is active');
+});
 // GET all employees
 router.get('/', async (req, res) => {
   try {

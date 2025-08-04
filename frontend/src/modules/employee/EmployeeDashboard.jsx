@@ -158,32 +158,32 @@ const markAttendance = async () => {
       console.error('Logout failed:', err);
     } finally {
       localStorage.removeItem('employeeToken');
-      navigate(`${process.env.REACT_APP_API_BASE_URL}/employee/login`, { replace: true });
+      navigate('/employee/login', { replace: true });
     }
   }, [navigate]);
-useEffect(() => {
-  const handleBack = (event) => {
-    event.preventDefault();
-    logoutAndRedirect(); // trigger logout
-  };
+  useEffect(() => {
+    const handleBack = (event) => {
+      event.preventDefault();
+      logoutAndRedirect(); // trigger logout
+    };
 
-  window.addEventListener('popstate', handleBack);
-  return () => {
-    window.removeEventListener('popstate', handleBack);
-  };
-}, [logoutAndRedirect]);
+    window.addEventListener('popstate', handleBack);
+    return () => {
+      window.removeEventListener('popstate', handleBack);
+    };
+  }, [logoutAndRedirect]);
 
- useEffect(() => {
-  const handleBack = (event) => {
-    event.preventDefault();
-    logoutAndRedirect(); // trigger logout
-  };
+  useEffect(() => {
+    const handleBack = (event) => {
+      event.preventDefault();
+      logoutAndRedirect(); // trigger logout
+    };
 
-  window.addEventListener('popstate', handleBack);
-  return () => {
-    window.removeEventListener('popstate', handleBack);
-  };
-}, [logoutAndRedirect]);
+    window.addEventListener('popstate', handleBack);
+    return () => {
+      window.removeEventListener('popstate', handleBack);
+    };
+  }, [logoutAndRedirect]);
 
 
 

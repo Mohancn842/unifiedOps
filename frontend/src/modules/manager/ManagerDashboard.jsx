@@ -37,7 +37,7 @@ const ManagerDashboard = () => {
   const logout = useCallback(() => {
     localStorage.removeItem('token');
     sessionStorage.setItem('loggedOut', 'true');
-    navigate(`${baseURL}/manager/login`, { replace: true });
+    navigate('/manager/login', { replace: true });
   }, [navigate]);
 
   // State
@@ -152,7 +152,7 @@ const exportExcel = (rows, columns, fileName) => {
     const loggedOut = sessionStorage.getItem('loggedOut');
     if (!token || loggedOut === 'true') {
       sessionStorage.removeItem('loggedOut');
-      navigate(`${baseURL}/manager/login`, { replace: true });
+      navigate('/manager/login', { replace: true });
       return;
     }
     // ================= Export Helpers =================
@@ -329,9 +329,9 @@ const handleAddToProject = async (projectId, employeeId) => {
           <div className="header-left">
             <h1>Manager Dashboard</h1>
             <div className="quick-actions">
-              <button onClick={() => navigate(`${baseURL}/manager/add-employee`)}>➕ Add Employee</button>
-              <button onClick={() => navigate(`${baseURL}/manager/addproject`)}>➕ Add Project</button>
-              <button onClick={() => navigate(`${baseURL}/manager/task`)}>📝 Assign Task</button>
+              <button onClick={() => navigate('/manager/add-employee')}>➕ Add Employee</button>
+              <button onClick={() => navigate('/manager/addproject')}>➕ Add Project</button>
+              <button onClick={() => navigate('/manager/task')}>📝 Assign Task</button>
             </div>
           </div>
           <div className="header-right">
