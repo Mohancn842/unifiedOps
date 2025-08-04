@@ -86,13 +86,12 @@ app.use('/api/payroll', payrollRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/marketing-teams', marketingTeamRoutes);
 app.use('/api/sales/employees', salesEmployeeRoutes);
-// ✅ Mount new route at the end (marketing)
 app.use('/api/marketing-employees', marketingEmployeeRoutes);
 app.use('/api/campaigns', campaignRoutes);
 app.use('/api', authRoutes1);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/support-employees', supportEmployeeRoutes);
-app.use("/api/payroll", payrollLoginRoutes);
+app.use('/api/payroll', payrollLoginRoutes);
 app.use('/api/account-projects', require('./routes/accountProject'));
 app.use('/api/invoices', require('./routes/invoice'));
 app.use('/api/teams', teamRoutes); 

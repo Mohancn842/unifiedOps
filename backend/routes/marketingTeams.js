@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
 
     await newTeam.save();
 
-    // 🔁 Update employees to reference the new team
+    // Update employees to reference the new team
     await MarketingEmployee.updateMany(
       { _id: { $in: memberIds } },
       { $set: { team: newTeam._id } }
@@ -65,8 +65,11 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-// Add this to your marketingTeams router
 
+/**
+ * @route   PUT /api/marketing-teams/:id
+ * @desc    Update a marketing team
+ */
 router.put('/:id', async (req, res) => {
   try {
     const { name, memberIds, teamLeadId } = req.body;
