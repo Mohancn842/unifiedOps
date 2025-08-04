@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const EmployeeTaskBoard = () => {
   const [tasks, setTasks] = useState([]);
@@ -18,7 +19,7 @@ const EmployeeTaskBoard = () => {
 
   const fetchEmployeeWithTasks = async (empId) => {
     try {
-     const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/employees/${empId}`);
+     const res = await axios.get(`${baseURL}/api/employees/${empId}`);
 
       setEmployee(res.data);
       const allTasks = res.data.projects?.flatMap(p =>
@@ -32,7 +33,7 @@ const EmployeeTaskBoard = () => {
 
   const changeStatus = async (taskId, newStatus) => {
     try {
-     await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/api/tasks/${taskId}/status`, {
+     await axios.patch(`${baseURL}/api/tasks/${taskId}/status`, {
   status: newStatus,
 });
 
@@ -47,7 +48,7 @@ const EmployeeTaskBoard = () => {
     const inProgressTasks = tasks.filter(t => t.status === 'In Progress');
     await Promise.all(
       inProgressTasks.map(task =>
-      axios.patch(`${process.env.REACT_APP_API_BASE_URL}/api/tasks/${task._id}/status`, { status: 'Assigned' })
+      axios.patch(`${baseURL}/api/tasks/${task._id}/status`, { status: 'Assigned' })
       )
     );
     navigate('/employee/dashboard');

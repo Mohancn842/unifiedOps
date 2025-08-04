@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 function AddMarketingEmployee() {
   const [form, setForm] = useState({
     name: '',
@@ -10,7 +10,7 @@ function AddMarketingEmployee() {
     designation: '',
     salary: '',
   });
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  
 
   const handleAddEmployee = async () => {
     const { name, email, password, department, designation, salary } = form;

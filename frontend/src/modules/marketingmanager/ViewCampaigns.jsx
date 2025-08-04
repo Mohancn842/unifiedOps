@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 function ViewCampaigns() {
   const [campaigns, setCampaigns] = useState([]);
   const [editId, setEditId] = useState(null);
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  
 
   const [form, setForm] = useState({
     name: '',
@@ -24,8 +24,6 @@ function ViewCampaigns() {
       .then(res => setCampaigns(res.data))
       .catch(err => console.error('Error fetching campaigns:', err));
   };
-
-
 
   useEffect(() => {
   axios.get(`${baseURL}/api/campaigns`)

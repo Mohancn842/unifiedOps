@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const EmployeeDashboard = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [employee, setEmployee] = useState(null);
   const navigate = useNavigate();
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  
 
   // Fetch campaigns
   const fetchCampaigns = async () => {

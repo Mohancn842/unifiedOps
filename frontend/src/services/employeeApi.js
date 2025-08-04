@@ -4,7 +4,7 @@ import API from './api';
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 export const employeeLogin = async (email, password) => {
-  const response = await API.post(`${baseURL}/auth/login`, {
+  const response = await API.post(`${baseURL}/api/auth/login`, {
     email,
     password,
     role: 'employee' // ✅ REQUIRED

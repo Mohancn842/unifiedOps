@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const AddEmployee = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -18,7 +18,7 @@ const AddEmployee = () => {
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;

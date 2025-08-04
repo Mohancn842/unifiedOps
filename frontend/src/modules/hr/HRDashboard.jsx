@@ -89,7 +89,7 @@ useEffect(() => {
     if (!selectedEmployeeId) return;
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/employees/${selectedEmployeeId}/performance`);
+      const res = await fetch(`${baseURL}/api/employees/${selectedEmployeeId}/performance`);
       if (!res.ok) throw new Error('Bad response from server');
       const data = await res.json();
       setPerformanceStats(data);
@@ -105,7 +105,7 @@ useEffect(() => {
 const handleViewPayrollHistory = async () => {
   if (!showHistory) {
     try {
-     const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/payroll/history`);
+     const res = await axios.get(`${baseURL}/api/payroll/history`);
       setPayrollHistory(res.data);
     } catch (err) {
       console.error('Error fetching payroll history:', err);

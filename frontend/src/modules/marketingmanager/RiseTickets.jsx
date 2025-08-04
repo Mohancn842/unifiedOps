@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 function RaiseTicket() {
   // Get employee ID and role from localStorage
   const rawId = localStorage.getItem('employeeId');
@@ -8,7 +8,7 @@ function RaiseTicket() {
 
   const roleRaw = localStorage.getItem('employeeRole');
   const role = roleRaw ? roleRaw.toLowerCase() : '';
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  
 
   // Determine raisedByModel based on role
   let raisedByModel = 'MarketingEmployee'; // default fallback

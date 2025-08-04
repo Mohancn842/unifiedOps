@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 function MarketingManager() {
   const [employees, setEmployees] = useState([]);
   const [teams, setTeams] = useState([]);
   const [campaignStats, setCampaignStats] = useState({ total: 0, active: 0 });
   const [monthlyCounts, setMonthlyCounts] = useState(Array(12).fill(0));
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  
 
   useEffect(() => {
     const fetchAll = async () => {

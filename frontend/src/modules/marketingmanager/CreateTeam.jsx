@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 function CreateTeam() {
   const [teamName, setTeamName] = useState('');
   const [employees, setEmployees] = useState([]);
@@ -8,7 +8,7 @@ function CreateTeam() {
   const [teamLeadId, setTeamLeadId] = useState('');
   const [teams, setTeams] = useState([]);
   const [editingTeamId, setEditingTeamId] = useState(null);
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  
 
   useEffect(() => {
     const fetchData = async () => {

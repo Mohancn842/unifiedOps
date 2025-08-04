@@ -13,6 +13,7 @@ import {
   FiCalendar, FiHome, FiClock, FiList,FiUsers,FiBell,
 } from 'react-icons/fi';
 import './EmployeeDashboard.css';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 const EmployeeDashboard = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (activeView === 'notifications' && employeeId) {
-       axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/notifications/employee/${employeeId}`)
+       axios.get(`${baseURL}/api/notifications/employee/${employeeId}`)
       .then(res => setNotifications(res.data))
       .catch(err => console.error('Failed to load notifications:', err));
   }
@@ -68,7 +69,7 @@ useEffect(() => {
 useEffect(() => {
   if (activeView === 'team' && employeeId) {
     setTeamLoading(true);
-  axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/employees/team/${employeeId}`)
+  axios.get(`${baseURL}/api/employees/team/${employeeId}`)
       .then(res => setTeamMembers(res.data))
       .catch(err => console.error('❌ Team fetch error:', err))
       .finally(() => setTeamLoading(false));
@@ -77,7 +78,7 @@ useEffect(() => {
 // ✅ Fetch attendance once when activeView is "attendance"
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-   axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/attendance/${employeeId}/monthly`)
+   axios.get(`${baseURL}/api/attendance/${employeeId}/monthly`)
       .then((response) => {
         setMonthlyPresent(response.data.presentDays);
         setAttendanceMarked(response.data.todayMarked);
@@ -89,7 +90,7 @@ useEffect(() => {
 }, [activeView, employeeId]);
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-  axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/leaves/${employeeId}/history`)
+  axios.get(`${baseURL}/api/leaves/${employeeId}/history`)
       .then(res => setLeaveHistory(res.data))
       .catch(err => console.error('Failed to load leave history', err));
   }
@@ -103,7 +104,7 @@ const markAttendance = async () => {
   }
 
   try {
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/attendance/mark`, { employeeId });
+    await axios.post(`${baseURL}/api/attendance/mark`, { employeeId });
     setAttendanceMarked(true);
     setMonthlyPresent(prev => prev + 1);
     alert('✅ Attendance marked successfully!');
@@ -126,9 +127,9 @@ const markAttendance = async () => {
   }
 
   try {
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/leaves/apply`, { employeeId, date: leaveDate, reason: leaveReason })
+    await axios.post(`${baseURL}/api/leaves/apply`, { employeeId, date: leaveDate, reason: leaveReason })
 
-    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/leaves/${employeeId}/history`);
+    const res = await axios.get(`${baseURL}/api/leaves/${employeeId}/history`);
 
     setLeaveHistory(res.data);
 
@@ -152,7 +153,7 @@ const markAttendance = async () => {
     try {
       const employeeId = employeeIdRef.current;
       if (employeeId) {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/logout`, { employeeId });
+      await axios.post(`${baseURL}/api/auth/logout`, { employeeId });
       }
     } catch (err) {
       console.error('Logout failed:', err);
@@ -195,11 +196,11 @@ const markAttendance = async () => {
       const decoded = jwtDecode(token);
       const employeeId = decoded.userId;
       employeeIdRef.current = employeeId;
-      axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/employees/${employeeId}`)
+      axios.get(`${baseURL}/api/employees/${employeeId}`)
 
         .then(res => {
           setEmployee(res.data);
-           return axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/sessions/${employeeId}`);
+           return axios.get(`${baseURL}/api/sessions/${employeeId}`);
 
         })
         .then(res => {
@@ -217,7 +218,7 @@ const markAttendance = async () => {
   }, [logoutAndRedirect]);
   const id = employeeIdRef.current;
 if (id) {
-  axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/tasks/history/${id}`)
+  axios.get(`${baseURL}/api/tasks/history/${id}`)
     .then(res => {
       setTaskHistory(res.data);
     })
@@ -231,7 +232,7 @@ if (id) {
       if (employeeId) {
         const data = JSON.stringify({ employeeId });
         navigator.sendBeacon(
-          `${process.env.REACT_APP_API_BASE_URL}/api/auth/logout`,
+          `${baseURL}/api/auth/logout`,
           new Blob([data], { type: 'application/json' })
         );
       }
@@ -669,7 +670,7 @@ const calculateProjectProgress = (projectName) => {
         {/* ✅ Mark all as read */}
         <button
           onClick={async () => {
-            await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/api/notifications/employee/${employeeId}/markAllAsRead`);
+            await axios.patch(`${baseURL}/api/notifications/employee/${employeeId}/markAllAsRead`);
             setNotifications(notifications.map(n => ({ ...n, isRead: true })));
           }}
           style={{
@@ -694,7 +695,7 @@ const calculateProjectProgress = (projectName) => {
             <div
               key={n._id}
               onClick={async () => {
-              await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/api/notifications/${n._id}/markAsRead`);
+              await axios.patch(`${baseURL}/api/notifications/${n._id}/markAsRead`);
                 setNotifications(prev =>
                   prev.map(item =>
                     item._id === n._id ? { ...item, isRead: true } : item
@@ -782,7 +783,7 @@ case 'info':
         {employee.contract_file ? (
           <div style={{ marginTop: '10px' }}>
             <b>Offer Letter:</b>{' '}
-           <a href={`${process.env.REACT_APP_API_BASE_URL}${employee.contract_file}`} target="_blank" rel="noopener noreferrer">
+           <a href={`${baseURL}${employee.contract_file}`} target="_blank" rel="noopener noreferrer">
 
               <button
                 style={{
@@ -1271,7 +1272,7 @@ case 'info':
         <div className="logo">UnifiedOps</div>
         <button className="nav-btn" onClick={() => setActiveView('welcome')}><FiHome /> Welcome</button>
         <button className="nav-btn" onClick={() => setActiveView('info')}><FiUser /> My Info</button>
-          <button className="nav-btn" onClick={() => setActiveView('team')}><FiUsers/>My Team</button>
+        <button className="nav-btn" onClick={() => setActiveView('team')}><FiUsers/>My Team</button>
         <button className="nav-btn" onClick={() => setActiveView('projects')}><FiFolder /> Projects</button>
         <button className="nav-btn" onClick={() => setActiveView('tasks')}><FiCheckSquare /> Tasks</button>
         <button className="nav-btn" onClick={() => setActiveView('attendance')}><FiCalendar /> Attendance</button>

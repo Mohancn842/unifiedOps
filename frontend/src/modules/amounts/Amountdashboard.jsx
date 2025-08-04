@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-const BACKEND = process.env.REACT_APP_API_BASE_URL;
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 
 export default function AccountInvoiceDashboard() {
@@ -27,8 +27,8 @@ export default function AccountInvoiceDashboard() {
   }, []);
 
   const fetchData = async () => {
-    const projRes = await axios.get(`${BACKEND}/api/account-projects`);
-    const invRes = await axios.get(`${BACKEND}/api/invoices`);
+    const projRes = await axios.get(`${baseURL}/api/account-projects`);
+    const invRes = await axios.get(`${baseURL}/api/invoices`);
     setProjects(projRes.data);
     setInvoices(invRes.data);
   };
@@ -43,7 +43,7 @@ export default function AccountInvoiceDashboard() {
     }
 
     try {
-      await axios.post(`${BACKEND}/api/account-projects`, form);
+      await axios.post(`${baseURL}/api/account-projects`, form);
       setForm({ projectName: '', startDate: '', endDate: '', estimatedAmount: '', spentAmount: '', description: '' });
       fetchData();
     } catch (error) {
@@ -133,9 +133,9 @@ export default function AccountInvoiceDashboard() {
     };
 
     if (editingInvoiceId) {
-      await axios.put(`${BACKEND}/api/invoices/${editingInvoiceId}`, invoiceData);
+      await axios.put(`${baseURL}/api/invoices/${editingInvoiceId}`, invoiceData);
     } else {
-      await axios.post(`${BACKEND}/api/invoices`, invoiceData);
+      await axios.post(`${baseURL}/api/invoices`, invoiceData);
     }
 
     generateInvoicePDF(invoiceData);
@@ -286,7 +286,7 @@ export default function AccountInvoiceDashboard() {
                 const updatedBalance = invoiceForm.totalAmount - updatedAdvance;
                 const updated = { ...invoiceForm, advance: updatedAdvance, balance: updatedBalance < 0 ? 0 : updatedBalance };
 
-                await axios.put(`${BACKEND}/api/invoices/${editingInvoiceId}`, updated);
+                await axios.put(`${baseURL}/api/invoices/${editingInvoiceId}`, updated);
               
                 setEditingInvoiceId(null);
                 setCurrentPayment(0);

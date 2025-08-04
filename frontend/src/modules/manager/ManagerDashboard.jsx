@@ -254,7 +254,7 @@ const handleAddToProject = async (projectId, employeeId) => {
       teamMembers.map(async (emp) => {
         try {
           const { data: perf } = await axios.get(
-          `/api/employees/${emp._id}/performance`
+          `${baseURL}/api/employees/${emp._id}/performance`
           );
           console.log(`📊 Performance for ${emp.name}:`, perf);
           return {
