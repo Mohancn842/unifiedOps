@@ -19,22 +19,24 @@ function ViewCampaigns() {
   });
   const [teams, setTeams] = useState([]);
 
-  useEffect(() => {
-    fetchCampaigns();
-    fetchTeams();
-  }, []);
-
   const fetchCampaigns = () => {
     axios.get(`${baseURL}/api/campaigns`)
       .then(res => setCampaigns(res.data))
       .catch(err => console.error('Error fetching campaigns:', err));
   };
 
-  const fetchTeams = () => {
-    axios.get(`${baseURL}/api/marketing-teams`)
-      .then(res => setTeams(res.data))
-      .catch(err => console.error('Error fetching teams:', err));
-  };
+
+
+  useEffect(() => {
+  axios.get(`${baseURL}/api/campaigns`)
+    .then(res => setCampaigns(res.data))
+    .catch(err => console.error('Error fetching campaigns:', err));
+
+  axios.get(`${baseURL}/api/marketing-teams`)
+    .then(res => setTeams(res.data))
+    .catch(err => console.error('Error fetching teams:', err));
+  }, [baseURL]);
+
 
   const handleEdit = (c) => {
     setEditId(c._id);

@@ -57,7 +57,7 @@ const authRoutes1 = require('./routes/authRoute1');
 const ticketRoutes = require('./routes/ticketRoutes');
 const supportEmployeeRoutes = require('./routes/support-employees');
 const teamRoutes = require('./routes/teamRoutes');
-const salesEmployeeRoutes = require('./routes/salesemployeeRoutes');
+const salesEmployeeRoutes = require('./routes/salesEmployeeRoutes.js');
 const payrollLoginRoutes = require("./routes/payrollLoginRoutes");
 
 
@@ -89,6 +89,16 @@ app.use('/api/teams', teamRoutes);
 app.get('/', (req, res) => {
   res.send('✅ UnifiedOps API is running...');
 });
+
+// ✅ Serve frontend (React build) in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
+  });
+}
+
 
 // ✅ MongoDB connection and server start
 const PORT = process.env.PORT || 5000;

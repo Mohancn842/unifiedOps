@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchEmployeesWithTasks } from '../../services/employeeService';
-const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 
 const EmployeesWithTasks = () => {
   const [employees, setEmployees] = useState([]);

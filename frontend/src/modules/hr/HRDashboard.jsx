@@ -274,7 +274,7 @@ useEffect(() => {
       })
       .catch(err => console.error('Error fetching attendance records', err));
   }
-}, [activeTab, attendanceDate,baseURL]);
+}, [activeTab, attendanceDate]);
 
 
   useEffect(() => {
@@ -282,7 +282,7 @@ useEffect(() => {
       .then(res => res.json())
       .then(data => setEmployees(data))
       .catch(err => console.error('Error fetching employees', err));
-  }, [baseURL]);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('hrToken');
@@ -297,7 +297,7 @@ useEffect(() => {
       .then(data => setLeaves(data))
       .catch(err => console.error('Error fetching leave data', err));
   }
-}, [activeTab,baseURL]);
+}, [activeTab]);
 
 
   const uniqueDepartments = [...new Set(employees.map(emp => emp.department))];

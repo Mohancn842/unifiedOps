@@ -41,7 +41,7 @@ function MarketingManager() {
     };
 
     fetchAll();
-  }, []);
+  }, [baseURL]);
 
   const teamOverview = {
     totalMembers: employees.length,
