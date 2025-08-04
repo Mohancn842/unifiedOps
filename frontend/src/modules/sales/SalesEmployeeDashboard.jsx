@@ -14,7 +14,7 @@ const SalesEmployeeDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${baseURL}/api/sales/employees/getByEmail/${email}`);
+        const res = await axios.get(`${baseURL}/sales/employees/getByEmail/${email}`);
         setEmployee(res.data);
       } catch (err) {
         console.error('❌ Failed to load employee data', err);
@@ -26,7 +26,7 @@ const SalesEmployeeDashboard = () => {
 
   const handleUpdate = async () => {
     try {
-      const res = await axios.put(`${baseURL}/api/sales/employees/updateTarget/${email}`, {
+      const res = await axios.put(`${baseURL}/sales/employees/updateTarget/${email}`, {
         completedTarget: Number(newCompleted),
       });
       setEmployee(res.data);

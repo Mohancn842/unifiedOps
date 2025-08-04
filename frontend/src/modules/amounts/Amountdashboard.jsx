@@ -27,8 +27,8 @@ export default function AccountInvoiceDashboard() {
   }, []);
 
   const fetchData = async () => {
-    const projRes = await axios.get(`${baseURL}/api/account-projects`);
-    const invRes = await axios.get(`${baseURL}/api/invoices`);
+    const projRes = await axios.get(`${baseURL}/account-projects`);
+    const invRes = await axios.get(`${baseURL}/invoices`);
     setProjects(projRes.data);
     setInvoices(invRes.data);
   };
@@ -43,7 +43,7 @@ export default function AccountInvoiceDashboard() {
     }
 
     try {
-      await axios.post(`${baseURL}/api/account-projects`, form);
+      await axios.post(`${baseURL}/account-projects`, form);
       setForm({ projectName: '', startDate: '', endDate: '', estimatedAmount: '', spentAmount: '', description: '' });
       fetchData();
     } catch (error) {
@@ -133,9 +133,9 @@ export default function AccountInvoiceDashboard() {
     };
 
     if (editingInvoiceId) {
-      await axios.put(`${baseURL}/api/invoices/${editingInvoiceId}`, invoiceData);
+      await axios.put(`${baseURL}/invoices/${editingInvoiceId}`, invoiceData);
     } else {
-      await axios.post(`${baseURL}/api/invoices`, invoiceData);
+      await axios.post(`${baseURL}/invoices`, invoiceData);
     }
 
     generateInvoicePDF(invoiceData);
@@ -286,7 +286,7 @@ export default function AccountInvoiceDashboard() {
                 const updatedBalance = invoiceForm.totalAmount - updatedAdvance;
                 const updated = { ...invoiceForm, advance: updatedAdvance, balance: updatedBalance < 0 ? 0 : updatedBalance };
 
-                await axios.put(`${baseURL}/api/invoices/${editingInvoiceId}`, updated);
+                await axios.put(`${baseURL}/invoices/${editingInvoiceId}`, updated);
               
                 setEditingInvoiceId(null);
                 setCurrentPayment(0);

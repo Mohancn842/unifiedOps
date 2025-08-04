@@ -14,7 +14,7 @@ const SupportEmployeeDashboard = () => {
 
   const fetchEmployeeData = useCallback(async () => {
     try {
-      const res = await axios.get(`${baseURL}/api/support-employees/${employeeId}`, {
+      const res = await axios.get(`${baseURL}/support-employees/${employeeId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEmployee(res.data.employee);
@@ -32,7 +32,7 @@ const SupportEmployeeDashboard = () => {
 
   const handleStatusChange = async (ticketId, newStatus) => {
     try {
-      await axios.put(`${baseURL}/api/tickets/status/${ticketId}`, {
+      await axios.put(`${baseURL}/tickets/status/${ticketId}`, {
         status: newStatus,
       });
       alert('✅ Status updated');

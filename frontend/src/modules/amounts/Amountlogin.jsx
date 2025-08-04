@@ -18,7 +18,7 @@ const PayrollManagerLogin = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(`${baseURL}/api/payroll/login`, {
+      const res = await axios.post(`${baseURL}/payroll/login`, {
         email,
         password,
       });

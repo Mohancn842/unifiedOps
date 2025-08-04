@@ -60,7 +60,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (activeView === 'notifications' && employeeId) {
-       axios.get(`${baseURL}/api/notifications/employee/${employeeId}`)
+       axios.get(`${baseURL}/notifications/employee/${employeeId}`)
       .then(res => setNotifications(res.data))
       .catch(err => console.error('Failed to load notifications:', err));
   }
@@ -69,7 +69,7 @@ useEffect(() => {
 useEffect(() => {
   if (activeView === 'team' && employeeId) {
     setTeamLoading(true);
-  axios.get(`${baseURL}/api/employees/team/${employeeId}`)
+  axios.get(`${baseURL}/employees/team/${employeeId}`)
       .then(res => setTeamMembers(res.data))
       .catch(err => console.error('❌ Team fetch error:', err))
       .finally(() => setTeamLoading(false));
@@ -78,7 +78,7 @@ useEffect(() => {
 // ✅ Fetch attendance once when activeView is "attendance"
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-   axios.get(`${baseURL}/api/attendance/${employeeId}/monthly`)
+   axios.get(`${baseURL}/attendance/${employeeId}/monthly`)
       .then((response) => {
         setMonthlyPresent(response.data.presentDays);
         setAttendanceMarked(response.data.todayMarked);
@@ -90,7 +90,7 @@ useEffect(() => {
 }, [activeView, employeeId]);
 useEffect(() => {
   if (activeView === 'attendance' && employeeId) {
-  axios.get(`${baseURL}/api/leaves/${employeeId}/history`)
+  axios.get(`${baseURL}/leaves/${employeeId}/history`)
       .then(res => setLeaveHistory(res.data))
       .catch(err => console.error('Failed to load leave history', err));
   }
@@ -104,7 +104,7 @@ const markAttendance = async () => {
   }
 
   try {
-    await axios.post(`${baseURL}/api/attendance/mark`, { employeeId });
+    await axios.post(`${baseURL}/attendance/mark`, { employeeId });
     setAttendanceMarked(true);
     setMonthlyPresent(prev => prev + 1);
     alert('✅ Attendance marked successfully!');
@@ -127,9 +127,9 @@ const markAttendance = async () => {
   }
 
   try {
-    await axios.post(`${baseURL}/api/leaves/apply`, { employeeId, date: leaveDate, reason: leaveReason })
+    await axios.post(`${baseURL}/leaves/apply`, { employeeId, date: leaveDate, reason: leaveReason })
 
-    const res = await axios.get(`${baseURL}/api/leaves/${employeeId}/history`);
+    const res = await axios.get(`${baseURL}/leaves/${employeeId}/history`);
 
     setLeaveHistory(res.data);
 
@@ -153,7 +153,7 @@ const markAttendance = async () => {
     try {
       const employeeId = employeeIdRef.current;
       if (employeeId) {
-      await axios.post(`${baseURL}/api/auth/logout`, { employeeId });
+      await axios.post(`${baseURL}/auth/logout`, { employeeId });
       }
     } catch (err) {
       console.error('Logout failed:', err);
@@ -196,11 +196,11 @@ const markAttendance = async () => {
       const decoded = jwtDecode(token);
       const employeeId = decoded.userId;
       employeeIdRef.current = employeeId;
-      axios.get(`${baseURL}/api/employees/${employeeId}`)
+      axios.get(`${baseURL}/employees/${employeeId}`)
 
         .then(res => {
           setEmployee(res.data);
-           return axios.get(`${baseURL}/api/sessions/${employeeId}`);
+           return axios.get(`${baseURL}/sessions/${employeeId}`);
 
         })
         .then(res => {
@@ -218,7 +218,7 @@ const markAttendance = async () => {
   }, [logoutAndRedirect]);
   const id = employeeIdRef.current;
 if (id) {
-  axios.get(`${baseURL}/api/tasks/history/${id}`)
+  axios.get(`${baseURL}/tasks/history/${id}`)
     .then(res => {
       setTaskHistory(res.data);
     })
@@ -232,7 +232,7 @@ if (id) {
       if (employeeId) {
         const data = JSON.stringify({ employeeId });
         navigator.sendBeacon(
-          `${baseURL}/api/auth/logout`,
+          `${baseURL}/auth/logout`,
           new Blob([data], { type: 'application/json' })
         );
       }
@@ -670,7 +670,7 @@ const calculateProjectProgress = (projectName) => {
         {/* ✅ Mark all as read */}
         <button
           onClick={async () => {
-            await axios.patch(`${baseURL}/api/notifications/employee/${employeeId}/markAllAsRead`);
+            await axios.patch(`${baseURL}/notifications/employee/${employeeId}/markAllAsRead`);
             setNotifications(notifications.map(n => ({ ...n, isRead: true })));
           }}
           style={{
@@ -695,7 +695,7 @@ const calculateProjectProgress = (projectName) => {
             <div
               key={n._id}
               onClick={async () => {
-              await axios.patch(`${baseURL}/api/notifications/${n._id}/markAsRead`);
+              await axios.patch(`${baseURL}/notifications/${n._id}/markAsRead`);
                 setNotifications(prev =>
                   prev.map(item =>
                     item._id === n._id ? { ...item, isRead: true } : item

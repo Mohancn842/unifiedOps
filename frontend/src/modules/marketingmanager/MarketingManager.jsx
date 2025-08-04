@@ -12,9 +12,9 @@ function MarketingManager() {
     const fetchAll = async () => {
       try {
         const [empRes, teamRes, campaignRes] = await Promise.all([
-          axios.get(`${baseURL}/api/marketing-employees`),
-          axios.get(`${baseURL}/api/marketing-teams`),
-          axios.get(`${baseURL}/api/campaigns`),
+          axios.get(`${baseURL}/marketing-employees`),
+          axios.get(`${baseURL}/marketing-teams`),
+          axios.get(`${baseURL}/campaigns`),
         ]);
 
         setEmployees(empRes.data);

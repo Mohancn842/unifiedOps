@@ -5,7 +5,7 @@ const baseURL = process.env.REACT_APP_API_BASE_URL;
 // Fetch all employees (basic + contract info)
 export const fetchAllEmployeesWithProjects = async () => {
   const token = localStorage.getItem('token');
-  const res = await axios.get(`${baseURL}/api/employees/full-details`, {
+  const res = await axios.get(`${baseURL}/employees/full-details`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -16,7 +16,7 @@ export const fetchAllEmployeesWithProjects = async () => {
 // ✅ Fetch only employees who have tasks assigned
 export const fetchEmployeesWithTasks = async () => {
   const token = localStorage.getItem('token');
-  const res = await axios.get(`${baseURL}/api/employees/with-tasks`, {
+  const res = await axios.get(`${baseURL}/employees/with-tasks`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -27,37 +27,37 @@ export const fetchEmployeesWithTasks = async () => {
 
 
 export const fetchEmployeeById = (id) =>
-  axios.get(`${baseURL}/api/employees/${id}`);
+  axios.get(`${baseURL}/employees/${id}`);
 
 export const fetchSessionsByEmployee = (id) =>
-  axios.get(`${baseURL}/api/sessions/${id}`);
+  axios.get(`${baseURL}/sessions/${id}`);
 
 export const fetchNotifications = (id) =>
-  axios.get(`${baseURL}/api/notifications/employee/${id}`);
+  axios.get(`${baseURL}/notifications/employee/${id}`);
 
 export const markNotificationAsRead = (notificationId) =>
-  axios.patch(`${baseURL}/api/notifications/${notificationId}/markAsRead`);
+  axios.patch(`${baseURL}/notifications/${notificationId}/markAsRead`);
 
 export const markAllNotificationsAsRead = (employeeId) =>
-  axios.patch(`${baseURL}/api/notifications/employee/${employeeId}/markAllAsRead`);
+  axios.patch(`${baseURL}/notifications/employee/${employeeId}/markAllAsRead`);
 
 export const fetchTeamMembers = (employeeId) =>
-  axios.get(`${baseURL}/api/employees/team/${employeeId}`);
+  axios.get(`${baseURL}/employees/team/${employeeId}`);
 
 export const fetchAttendance = (employeeId) =>
-  axios.get(`${baseURL}/api/attendance/${employeeId}/monthly`);
+  axios.get(`${baseURL}/attendance/${employeeId}/monthly`);
 
 export const fetchLeaveHistory = (employeeId) =>
-  axios.get(`${baseURL}/api/leaves/${employeeId}/history`);
+  axios.get(`${baseURL}/leaves/${employeeId}/history`);
 
 export const markAttendance = (employeeId) =>
-  axios.post(`${baseURL}/api/attendance/mark`, { employeeId });
+  axios.post(`${baseURL}/attendance/mark`, { employeeId });
 
 export const applyLeave = (employeeId, date, reason) =>
-  axios.post(`${baseURL}/api/leaves/apply`, { employeeId, date, reason });
+  axios.post(`${baseURL}/leaves/apply`, { employeeId, date, reason });
 
 export const logoutEmployee = (employeeId) =>
-  axios.post(`${baseURL}/api/auth/logout`, { employeeId });
+  axios.post(`${baseURL}/auth/logout`, { employeeId });
 
 export const fetchTaskHistory = (employeeId) =>
-  axios.get(`${baseURL}/api/tasks/history/${employeeId}`);
+  axios.get(`${baseURL}/tasks/history/${employeeId}`);

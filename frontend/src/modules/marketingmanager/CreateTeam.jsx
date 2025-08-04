@@ -14,8 +14,8 @@ function CreateTeam() {
     const fetchData = async () => {
       try {
         const [empRes, teamRes] = await Promise.all([
-          axios.get(`${baseURL}/api/marketing-employees`),
-          axios.get(`${baseURL}/api/marketing-teams`),
+          axios.get(`${baseURL}/marketing-employees`),
+          axios.get(`${baseURL}/marketing-teams`),
         ]);
         setEmployees(empRes.data);
         setTeams(teamRes.data);
@@ -56,14 +56,14 @@ function CreateTeam() {
 
     try {
       if (editingTeamId) {
-        await axios.put(`${baseURL}/api/marketing-teams/${editingTeamId}`, {
+        await axios.put(`${baseURL}/marketing-teams/${editingTeamId}`, {
           name: teamName,
           memberIds: selectedMembers,
           teamLeadId,
         });
         alert('Team updated successfully!');
       } else {
-        await axios.post(`${baseURL}/api/marketing-teams`, {
+        await axios.post(`${baseURL}/marketing-teams`, {
           name: teamName,
           memberIds: selectedMembers,
           teamLeadId,
@@ -76,7 +76,7 @@ function CreateTeam() {
       setTeamLeadId('');
       setEditingTeamId(null);
 
-      const updatedTeams = await axios.get(`${baseURL}/api/marketing-teams`);
+      const updatedTeams = await axios.get(`${baseURL}/marketing-teams`);
       setTeams(updatedTeams.data);
     } catch (error) {
       console.error('Error submitting team:', error);

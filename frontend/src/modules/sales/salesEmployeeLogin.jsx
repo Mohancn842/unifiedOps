@@ -21,7 +21,7 @@ const SalesEmployeeLogin = () => {
   e.preventDefault();
   setLoading(true);
   try {
-    const res = await axios.post(`${baseURL}/api/sales/employees/login`, {
+    const res = await axios.post(`${baseURL}/sales/employees/login`, {
       email,
       password,
     });

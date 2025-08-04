@@ -167,7 +167,7 @@ const AddEmployee = () => {
       }
       data.append('contract_file', pdfFile); // Auto-generated contract
 
-      const response = await axios.post(`${baseURL}/api/employees`, data);
+      const response = await axios.post(`${baseURL}/employees`, data);
       setMessage({ type: 'success', text: response.data.message });
 
       setFormData({

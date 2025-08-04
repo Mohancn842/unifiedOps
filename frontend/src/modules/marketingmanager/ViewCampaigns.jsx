@@ -20,17 +20,17 @@ function ViewCampaigns() {
   const [teams, setTeams] = useState([]);
 
   const fetchCampaigns = () => {
-    axios.get(`${baseURL}/api/campaigns`)
+    axios.get(`${baseURL}/campaigns`)
       .then(res => setCampaigns(res.data))
       .catch(err => console.error('Error fetching campaigns:', err));
   };
 
   useEffect(() => {
-  axios.get(`${baseURL}/api/campaigns`)
+  axios.get(`${baseURL}/campaigns`)
     .then(res => setCampaigns(res.data))
     .catch(err => console.error('Error fetching campaigns:', err));
 
-  axios.get(`${baseURL}/api/marketing-teams`)
+  axios.get(`${baseURL}/marketing-teams`)
     .then(res => setTeams(res.data))
     .catch(err => console.error('Error fetching teams:', err));
   }, [baseURL]);
@@ -58,7 +58,7 @@ function ViewCampaigns() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`${baseURL}/api/campaigns/${editId}`, form);
+      await axios.put(`${baseURL}/campaigns/${editId}`, form);
       alert('Campaign updated');
       setEditId(null);
       fetchCampaigns();

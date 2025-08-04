@@ -43,7 +43,7 @@ function RaiseTicket() {
 
     try {
       // IMPORTANT: include raisedByModel param as backend expects both
-      const res = await axios.get(`${baseURL}/api/tickets/user/${employeeId}/${raisedByModel}`);
+      const res = await axios.get(`${baseURL}/tickets/user/${employeeId}/${raisedByModel}`);
       setTickets(res.data);
     } catch (err) {
       console.error('Error fetching ticket history:', err);
@@ -59,7 +59,7 @@ function RaiseTicket() {
     }
 
     try {
-      await axios.post(`${baseURL}/api/tickets/raise`, form);
+      await axios.post(`${baseURL}/tickets/raise`, form);
       alert('✅ Ticket Raised');
       setForm({
         title: '',

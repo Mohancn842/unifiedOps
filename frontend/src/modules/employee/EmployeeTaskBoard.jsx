@@ -19,7 +19,7 @@ const EmployeeTaskBoard = () => {
 
   const fetchEmployeeWithTasks = async (empId) => {
     try {
-     const res = await axios.get(`${baseURL}/api/employees/${empId}`);
+     const res = await axios.get(`${baseURL}/employees/${empId}`);
 
       setEmployee(res.data);
       const allTasks = res.data.projects?.flatMap(p =>
@@ -33,7 +33,7 @@ const EmployeeTaskBoard = () => {
 
   const changeStatus = async (taskId, newStatus) => {
     try {
-     await axios.patch(`${baseURL}/api/tasks/${taskId}/status`, {
+     await axios.patch(`${baseURL}/tasks/${taskId}/status`, {
   status: newStatus,
 });
 
@@ -48,7 +48,7 @@ const EmployeeTaskBoard = () => {
     const inProgressTasks = tasks.filter(t => t.status === 'In Progress');
     await Promise.all(
       inProgressTasks.map(task =>
-      axios.patch(`${baseURL}/api/tasks/${task._id}/status`, { status: 'Assigned' })
+      axios.patch(`${baseURL}/tasks/${task._id}/status`, { status: 'Assigned' })
       )
     );
     navigate('/employee/dashboard');

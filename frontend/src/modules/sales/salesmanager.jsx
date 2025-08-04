@@ -10,7 +10,7 @@ const SalesManager = () => {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get(`${baseURL}/api/sales/employees`);
+      const res = await axios.get(`${baseURL}/sales/employees`);
       setEmployees(res.data);
     } catch (err) {
       console.error('Failed to fetch employees:', err);

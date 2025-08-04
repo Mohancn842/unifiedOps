@@ -12,7 +12,7 @@ const EmployeeDashboard = () => {
   const fetchCampaigns = async () => {
   try {
     const employeeId = localStorage.getItem('employeeId');
-    const res = await axios.get(`${baseURL}/api/campaigns/team/${employeeId}`);
+    const res = await axios.get(`${baseURL}/campaigns/team/${employeeId}`);
     setCampaigns(res.data);
   } catch (err) {
     console.error('Error fetching campaigns:', err);

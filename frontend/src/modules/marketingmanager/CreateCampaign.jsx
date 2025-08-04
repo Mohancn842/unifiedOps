@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 function CreateCampaign() {
   const [form, setForm] = useState({
@@ -13,12 +14,11 @@ function CreateCampaign() {
     agenda: '',
     assignedTeam: '',
   });
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   const [teams, setTeams] = useState([]);
 
   useEffect(() => {
-    axios.get(`${baseURL}api/marketing-teams`)
+    axios.get(`${baseURL}/marketing-teams`)
       .then((res) => setTeams(res.data))
       .catch((err) => console.error('Error fetching teams:', err));
   }, [baseURL]);
@@ -37,7 +37,7 @@ function CreateCampaign() {
 
     try {
       const payload = { ...form };
-      await axios.post(`${baseURL}/api/campaigns`, payload);
+      await axios.post(`${baseURL}/campaigns`, payload);
       alert('Campaign created successfully');
       setForm({
         title: '',

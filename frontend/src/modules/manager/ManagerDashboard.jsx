@@ -62,7 +62,7 @@ const [sessionStartDate, setSessionStartDate] = useState('');
 const [sessionEndDate, setSessionEndDate] = useState('');
 
 useEffect(() => {
- axios.get(`${baseURL}/api/sessions`)
+ axios.get(`${baseURL}/sessions`)
     .then((res) => {
       console.log("Fetched sessions:", res.data);
       setSessions(res.data);
@@ -170,7 +170,7 @@ const exportExcel = (rows, columns, fileName) => {
       try {
         const empData = await fetchAllEmployeesWithProjects();
         const taskData = await fetchEmployeesWithTasks();
-        const projData = await axios.get(`${baseURL}/api/projects`);
+        const projData = await axios.get(`${baseURL}/projects`);
         const taskList = await fetchTasks();
         setEmployees(empData);
         setEmployeesWithTasks(taskData);
@@ -200,14 +200,14 @@ const handleAddToProject = async (projectId, employeeId) => {
   if (!employeeId) return;
 
   try {
-    await axios.post(`${baseURL}/api/projects/${projectId}/add-member`, {
+    await axios.post(`${baseURL}/projects/${projectId}/add-member`, {
       employeeId,
     });
 
     // 🔄 Refresh project & employee data after update
     const [empData, projData] = await Promise.all([
       fetchAllEmployeesWithProjects(),
-     axios.get(`${baseURL}/api/projects`),
+     axios.get(`${baseURL}/projects`),
     ]);
     setEmployees(empData);
     setProjects(projData.data);
@@ -225,7 +225,7 @@ const handleAddToProject = async (projectId, employeeId) => {
 
     // ✅ Step 1: Fetch employees with tasks
     const { data: employeesWithTasks } = await axios.get(
-     `${baseURL}/api/employees/with-tasks`
+     `${baseURL}/employees/with-tasks`
     );
 
     console.log("🚀 All employees with tasks:", employeesWithTasks);
@@ -254,7 +254,7 @@ const handleAddToProject = async (projectId, employeeId) => {
       teamMembers.map(async (emp) => {
         try {
           const { data: perf } = await axios.get(
-          `${baseURL}/api/employees/${emp._id}/performance`
+          `${baseURL}/employees/${emp._id}/performance`
           );
           console.log(`📊 Performance for ${emp.name}:`, perf);
           return {

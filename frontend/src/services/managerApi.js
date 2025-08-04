@@ -11,7 +11,7 @@ API.interceptors.request.use((config) => {
 
 // Manager login function
 export const managerLogin = async (email, password) => {
-  const response = await API.post(`${baseURL}/api/auth/login`, {
+  const response = await API.post(`${baseURL}/auth/login`, {
     email,
     password,
     role: 'manager',

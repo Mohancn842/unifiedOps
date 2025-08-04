@@ -20,7 +20,7 @@ const SupportEmployeeLogin = () => {
   const handleLogin = async () => {
   setLoading(true);
   try {
-    const res = await axios.post(`${baseURL}/api/support-employees/login`, {
+    const res = await axios.post(`${baseURL}/support-employees/login`, {
       email,
       password,
     });

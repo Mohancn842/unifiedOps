@@ -24,7 +24,7 @@ const AddEmployee = () => {
         ...formData,
         joinDate: new Date(formData.joinDate).toISOString()
       };
-      await axios.post(`${baseURL}/api/sales/employees/add`, payload);
+      await axios.post(`${baseURL}/sales/employees/add`, payload);
       alert('✅ Employee added successfully!');
       navigate('/salesmanager/dashboard/');
     } catch (err) {

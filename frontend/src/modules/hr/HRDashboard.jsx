@@ -89,7 +89,7 @@ useEffect(() => {
     if (!selectedEmployeeId) return;
 
     try {
-      const res = await fetch(`${baseURL}/api/employees/${selectedEmployeeId}/performance`);
+      const res = await fetch(`${baseURL}/employees/${selectedEmployeeId}/performance`);
       if (!res.ok) throw new Error('Bad response from server');
       const data = await res.json();
       setPerformanceStats(data);
@@ -105,7 +105,7 @@ useEffect(() => {
 const handleViewPayrollHistory = async () => {
   if (!showHistory) {
     try {
-     const res = await axios.get(`${baseURL}/api/payroll/history`);
+     const res = await axios.get(`${baseURL}/payroll/history`);
       setPayrollHistory(res.data);
     } catch (err) {
       console.error('Error fetching payroll history:', err);
@@ -117,10 +117,10 @@ const handleViewPayrollHistory = async () => {
 
 useEffect(() => {
   if (activeTab === 'payroll') {
-   fetch(`${baseURL}/api/employees`)
+   fetch(`${baseURL}/employees`)
       .then(res => res.json())
       .then(data => setAllEmployees(data));
-   fetch(`${baseURL}/api/payroll/paid/${currentMonth}`)
+   fetch(`${baseURL}/payroll/paid/${currentMonth}`)
       .then(res => res.json())
       .then(data => setPaidEmployees(data.map(p => p.employee._id))); // only IDs
   }
@@ -149,12 +149,12 @@ const handlePaySelected = async () => {
   try {
     setIsLoading(true);
 
-    await axios.post(`${baseURL}/api/payroll/pay`, {
+    await axios.post(`${baseURL}/payroll/pay`, {
       employeeIds: selectedEmployees,
       month: currentMonth,
     });
 
-    const { data } = await axios.get(`${baseURL}/api/payroll/paid/${currentMonth}`);
+    const { data } = await axios.get(`${baseURL}/payroll/paid/${currentMonth}`);
     setPaidEmployees(data.map(p => p.employee._id)); // ensure only IDs
 
     setSelectedEmployees([]);
@@ -170,7 +170,7 @@ const handlePaySelected = async () => {
 const fetchJobs = async () => {
   try {
     console.log('🔄 Fetching jobs...');
-    const res = await fetch(`${baseURL}/api/jobs`);
+    const res = await fetch(`${baseURL}/jobs`);
 
     const data = await res.json();
     console.log('📦 Jobs fetched from backend:', data); // ✅ Confirm what was received
@@ -198,7 +198,7 @@ const handleInputChange = (e) => {
 const handleAddJob = async (e) => {
   e.preventDefault();
   try {
-  await axios.post(`${baseURL}/api/jobs/add`, newJob);
+  await axios.post(`${baseURL}/jobs/add`, newJob);
 
     setNewJob({
       title: '',
@@ -237,7 +237,7 @@ useEffect(() => {
 const handleLeaveAction = (leaveId, status) => {
   const backendAction = status === 'Approved' ? 'approve' : 'reject';
 
-  fetch(`${baseURL}/api/leaves/${leaveId}/${backendAction}`, {
+  fetch(`${baseURL}/leaves/${leaveId}/${backendAction}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -255,14 +255,14 @@ const handleLeaveAction = (leaveId, status) => {
 useEffect(() => {
   if (activeTab === 'leaves') {
     // Fetch leave requests
-   fetch(`${baseURL}/api/leaves/all`)
+   fetch(`${baseURL}/leaves/all`)
       .then(res => res.json())
       .then(data => setLeaves(data))
       .catch(err => console.error('Error fetching leave data', err));
 
     // Fetch attendance records
     const query = attendanceDate ? `?date=${attendanceDate}` : '';
-    fetch(`${baseURL}/api/attendance/all${query}`)
+    fetch(`${baseURL}/attendance/all${query}`)
 
       .then(res => res.json())
       .then(data => {
@@ -278,7 +278,7 @@ useEffect(() => {
 
 
   useEffect(() => {
-   fetch(`${baseURL}/api/employees`)
+   fetch(`${baseURL}/employees`)
       .then(res => res.json())
       .then(data => setEmployees(data))
       .catch(err => console.error('Error fetching employees', err));
@@ -292,7 +292,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (activeTab === 'leaves') {
-    fetch(`${baseURL}/api/leaves/all`)
+    fetch(`${baseURL}/leaves/all`)
       .then(res => res.json())
       .then(data => setLeaves(data))
       .catch(err => console.error('Error fetching leave data', err));

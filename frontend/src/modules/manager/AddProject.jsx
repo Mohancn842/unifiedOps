@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 const AddProject = () => {
   const [form, setForm] = useState({
     name: '',
@@ -9,7 +9,7 @@ const AddProject = () => {
     end_date: '',
     status: 'Planned',
   });
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const AddProject = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get(`${baseURL}/api/projects`);
+      const res = await axios.get(`${baseURL}/projects`);
       setProjects(res.data);
     } catch (err) {
       console.error('Failed to fetch projects:', err);
@@ -33,7 +33,7 @@ const AddProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     await axios.post(`${baseURL}/api/projects`, form);
+     await axios.post(`${baseURL}/projects`, form);
       alert('✅ Project added successfully!');
       setForm({ name: '', description: '', start_date: '', end_date: '', status: 'Planned' });
       fetchProjects(); // Refresh list
