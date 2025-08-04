@@ -12,22 +12,11 @@ const allowedOrigins = [
   'http://localhost:3000'
 ];
 
-// ✅ Define corsOptions before using it
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://managenest-frontend.onrender.com'],
   credentials: true,
-};
+}));
 
-// ✅ Use CORS middleware
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // handles preflight requests
 
 // Continue with other middlewares
 app.use(express.json());

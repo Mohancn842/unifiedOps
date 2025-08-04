@@ -19,7 +19,7 @@ const EmployeeLogin = () => {
  const handleLogin = async () => {
   try {
     const { token } = await employeeLogin(email, password);
-    console.log('✅ Token received:', token); // ✅ Add this line
+    console.log('✅ Token received:', token);
     localStorage.setItem('employeeToken', token);
     alert('✅ Employee login successful');
     navigate('/employee/dashboard', { replace: true });
