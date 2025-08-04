@@ -57,7 +57,7 @@ const authRoutes1 = require('./routes/authRoute1');
 const ticketRoutes = require('./routes/ticketRoutes');
 const supportEmployeeRoutes = require('./routes/support-employees');
 const teamRoutes = require('./routes/teamRoutes');
-const salesEmployeeRoutes = require('./routes/salesEmployeeRoutes.js');
+const salesEmployeeRoutes = require('./routes/salesEmployeeRoutes');
 const payrollLoginRoutes = require("./routes/payrollLoginRoutes");
 
 
@@ -74,7 +74,7 @@ app.use('/api/leaves', leaveRoutes);
 app.use('/api/payroll', payrollRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/marketing-teams', marketingTeamRoutes);
-app.use('/api/sales/employees', salesEmployeeRoutes);
+app.use('/api/sales-employees', salesEmployeeRoutes);
 app.use('/api/marketing-employees', marketingEmployeeRoutes);
 app.use('/api/campaigns', campaignRoutes);
 app.use('/api', authRoutes1);
